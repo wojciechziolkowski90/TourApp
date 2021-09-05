@@ -1,0 +1,12 @@
+{% extends 'navbar.html' %}
+{% block content %}
+    <h1 class="text-center">Szczegóły wycieczki</h1>
+    <div class="card p-2">
+        <div class="card-body">
+            {{ objects.id }}
+            {{ object.tour_days }}
+            {{ item.tour_name }}
+
+        </div>
+    </div>
+{% endblock %}

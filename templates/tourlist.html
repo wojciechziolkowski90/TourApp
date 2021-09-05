@@ -1,0 +1,18 @@
+{% extends 'navbar.html' %}
+
+{% block content %}
+
+    <h1 class="text-center">Wycieczki</h1>
+
+    <ul class="list-group">
+        {% for item in objects %}
+            <li class="list-group-item m-1"> {{ item.tour_name }}
+                <ul class="list-group list-group-horizontal">
+                    <a class="list-group-item list-group-item-action">Edytuj </a>
+                    <a class="list-group-item list-group-item-action" href="{% url 'tourdetails' %}">Szczegóły </a>
+                    <a class="list-group-item list-group-item-action" >Usuń </a>
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
