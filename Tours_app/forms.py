@@ -2,6 +2,9 @@ from django import forms
 from django.contrib.auth import authenticate
 from jsonschema import ValidationError
 
+from Tours_app.models import Tour
+
+
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=60)
     password = forms.CharField(max_length=60, widget=forms.PasswordInput)
@@ -25,3 +28,8 @@ class SignUpForm(forms.Form):
         if data.get('password') != data.get('re_password'):
             raise ValidationError("hasła się nie zgadzają")
         return data
+
+
+class ReviewForm(forms.Form):
+    user_name = forms.CharField(max_length=100)
+    user_review = forms.CharField(widget=forms.Textarea(attrs={'rows':3}))

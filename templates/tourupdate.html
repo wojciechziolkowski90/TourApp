@@ -1,8 +1,14 @@
 {% extends 'navbar.html' %}
 {% block content %}
+
+    <h1 class="text-center">Edytuj wycieczkę</h1>
+    </br>
+    </br>
+    </br>
+
     <form method="post" class="bg-light">
         {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Wyślij">
+        {{ form.as_p}}
+        <input type="submit">
     </form>
 {% endblock %}

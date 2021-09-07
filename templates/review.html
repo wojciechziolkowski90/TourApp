@@ -1,9 +1,8 @@
 {% extends 'navbar.html' %}
 {% block content %}
-    Czy na pewno chcesz usunąć wycieczkę {{ object.tour_name }} ?
     <form method="post" class="bg-light">
         {% csrf_token %}
         {{ form.as_p }}
-       <input type="submit" value="Usuń Wycieczkę">
+        <input type="submit" value="Wyślij opinię">
     </form>
 {% endblock %}
