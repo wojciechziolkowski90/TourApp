@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ToursApp</title>
+    <link href="{% static 'styles/css/bootstrap.min.css' %}" rel="stylesheet">
+</head>
+<body>
+
+{% include 'navbar.html' %}
+  <form method="post" class="bg-light">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Wyślij opinię">
+    </form>
+{% for item in object %}
+    <ul class="list-group">
+        <li class="list-group-item m-1"> NAZWA: {{ item. }}
+
+        </li>
+
+    </ul>
+{% endfor %}
+
+</body>
+</html>
+
