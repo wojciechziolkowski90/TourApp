@@ -1,0 +1,309 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>Adventure Tour - Georgia</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="../Tours_app/static/templatestyle/assets/favicon.ico"/>
+    <!-- Font Awesome icons (free version)-->
+    <script src="{% static 'templatestyle/js/scripts.js' %}"></script>
+    <link href="{% static 'templatestyle/css/styles.css' %}" rel="stylesheet">
+    <!-- Google fonts-->
+    {#            <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css"/>#}
+    {#            <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css"/>#}
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css"/>
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet"/>
+    <style>
+        #logo {
+            height: 100px;
+            width: 150px;
+        }
+    </style>
+</head>
+<body id="page-top">
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+    <div class="container">
+        <a href="#page-top"> <img id="logo" src="{% static 'images/logo1.png' %}"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars ms-1"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                <li class="nav-item"><a class="nav-link" href="{% url 'homepage' %}">Strona
+                    Główna</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">o Nas</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'tourlist' %}">Wycieczki do Gruzji</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Kontakt</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'review' %}">Opinie</a></li>
+            </ul>
+
+        </div>
+    </div>
+    <form class="d-flex">
+        {% if user.is_authenticated %}
+            <a href="{% url 'logout' %}"
+               class="nav-item nav-link">Wyloguj</a>
+        {% else %}
+
+            <a href="{% url 'login' %}"
+               class="nav-item nav-link">Zaloguj</a>
+
+                <a href="{% url 'signup' %}"
+            class="nav-item nav-link">Rejestracja</a>
+        {% endif %}
+
+    </form>
+
+
+    </ul>
+
+
+    </div>
+    </div>
+    <div>
+        <a href="{{ request.META.HTTP_REFERER }}"
+           class="nav-item nav-link">Powrót</a>
+    </div>
+</nav>
+<!-- Masthead-->
+<header class="masthead">
+    <div class="container">
+        <div class="masthead-subheading">Wycieczki do Gruzji</div>
+        <div class="masthead-heading text-uppercase">Adventure Tours</div>
+        <a class="btn btn-primary btn-xl text-uppercase" href="#services">Pokaż wycieczki</a>
+    </div>
+</header>
+<!-- Services-->
+<section class="page-section" id="services">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="text-uppercase">Podróże do Gruzji</h2>
+            <h3 class="section-subheading text-muted"></h3>
+        </div>
+        <div class="row text-center">
+            <div class="col-md-4">
+                        <span class="fa-stack fa-4x">
+                            <i class="fas fa-circle fa-stack-2x text-primary"></i>
+                            <i class="fas fa-biking fa-stack-1x fa-inverse"></i>
+                        </span>
+                <h4 class="my-3">Aktywnie</h4>
+                <p class="text-muted"> Trekingi górskie na Kaukazie</p>
+            </div>
+            <div class="col-md-4">
+                        <span class="fa-stack fa-4x">
+                            <i class="fas fa-circle fa-stack-2x text-primary"></i>
+                            <i class="fas fa-route fa-stack-1x fa-inverse"></i>
+                        </span>
+                <h4 class="my-3">Wycieczki kulturowe</h4>
+                <p class="text-muted">Poznaj Gruzję, jej kulturę, kuchnię i najwazniejsze miejsca</p>
+            </div>
+            <div class="col-md-4">
+                        <span class="fa-stack fa-4x">
+                            <i class="fas fa-circle fa-stack-2x text-primary"></i>
+                            <i class="fas fa-hiking fa-stack-1x fa-inverse"></i>
+                        </span>
+                <h4 class="my-3">Przygoda</h4>
+                <p class="text-muted">Off road 4x4, noclegi u gospodarzy, dzikie gorące źródła</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Portfolio Grid-->
+<section class="page-section bg-light" id="portfolio">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase"><a href="{% url 'tourlist' %}"> Podróże do Gruzji</a></h2>
+            <h3 class="section-subheading text-muted"></h3>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-sm-6 mb-4">
+                <!-- Portfolio item 1-->
+                <div class="portfolio-item">
+                    <a class="portfolio-link" data-bs-toggle="modal" href="{% url 'tourlist' %}">
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                        </div>
+                        <img class="img-fluid" src="{% static 'images/home.jpg' %}" alt="home">
+                    </a>
+                    <div class="portfolio-caption">
+                        <div class="portfolio-caption-heading" >Trekingi</div>
+                        <div class="portfolio-caption-subheading text-muted">Illustration</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6 mb-4">
+                <!-- Portfolio item 2-->
+                <div class="portfolio-item">
+                    <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal2">
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                        </div>
+                        <img class="img-fluid" src="{% static 'images/gruzja.JPG' %}" alt="kirgistan">
+                    </a>
+                    <div class="portfolio-caption">
+                        <div class="portfolio-caption-heading">Wine Tour</div>
+                        <div class="portfolio-caption-subheading text-muted">Graphic Design</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6 mb-4">
+                <!-- Portfolio item 3-->
+                <div class="portfolio-item">
+                    <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal3">
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                        </div>
+                        <img class="img-fluid" src="{% static 'images/auto.JPG' %}" alt="kirgistan">
+                    </a>
+                    <div class="portfolio-caption">
+                        <div class="portfolio-caption-heading">Off Road</div>
+                        <div class="portfolio-caption-subheading text-muted">Identity</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6 mb-4 mb-lg-0">
+                <!-- Portfolio item 4-->
+                <div class="portfolio-item">
+                    <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal4">
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                        </div>
+                        <img class="img-fluid" src="{% static 'images/taniec.JPG' %}" alt="kirgistan">
+                    </a>
+                    <div class="portfolio-caption">
+                        <div class="portfolio-caption-heading">Kulturowo</div>
+                        <div class="portfolio-caption-subheading text-muted">Branding</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6 mb-4 mb-sm-0">
+                <!-- Portfolio item 5-->
+                <div class="portfolio-item">
+                    <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal5">
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                        </div>
+                        <img class="img-fluid" src="{% static 'images/zima2.JPG' %}" alt="kirgistan">
+                    </a>
+                    <div class="portfolio-caption">
+                        <div class="portfolio-caption-heading">Narty w Gruzji</div>
+                        <div class="portfolio-caption-subheading text-muted">Website Design</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <!-- Portfolio item 6-->
+                <div class="portfolio-item">
+                    <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal6">
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                        </div>
+                        <img class="img-fluid" src="{% static 'images/fotopoza.JPG' %}" alt="kirgistan">
+                    </a>
+                    <div class="portfolio-caption">
+                        <div class="portfolio-caption-heading">Fotowyprawy</div>
+                        <div class="portfolio-caption-subheading text-muted">Photography</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+</section>
+<!-- About-->
+<section class="page-section" id="about">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase"><a href="{% url 'about' %}"> O nas </a></h2>
+            <h3 class="section-subheading text-muted">Grupa zajawkowiczów Kaukazu.</h3>
+        </div>
+        <ul class="timeline">
+            <li>
+                <div class="timeline-image"><img class="rounded-circle img-fluid"
+                                                 src="{% static 'templatestyle/assets/img/about/1.jpg' %}"
+                                                 alt="">
+                    alt="..."/>
+                </div>
+                <div class="timeline-panel">
+                    <div class="timeline-heading">
+                        <h4>Pasja od 2014 roku</h4>
+                    </div>
+                    <div class="timeline-body"><p class="text-muted">Kto trafił do Gruzji, musi spłacić daninę tutejszym obyczajom. Kto tu trafi, będzie wprowadzony w rytuał biesiady, która dla Gruzina jest smakiem życia. Gruzin ucztuje przy każdej okazji. </p></div>
+                </div>
+            </li>
+            <li class="timeline-inverted">
+                <div class="timeline-image"><img class="rounded-circle img-fluid"
+                                                 src="{% static 'templatestyle/assets/img/about/2.jpg' %}"
+                                                 alt="..."/></div>
+                <div class="timeline-panel">
+                    <div class="timeline-heading">
+                        <h4>Przygoda</h4>
+                    </div>
+                    <div class="timeline-body"><p class="text-muted">Gruzja wydaje się ogromna, bezgraniczna jak ocean. Góry pomnażają krajobraz. Na danej przestrzeni równina oferuje tylko jeden pejzaż. Na tej samej przestrzeni góry pokażą dziesiątki, a nawet setki widoków. Wystarczy przejechać kilometr dalej, wystarczy minąć jakieś zbocze, wejść na skałę albo opuścić się w dolinę. </p></div>
+                </div>
+            </li>
+            <li>
+                <div class="timeline-image"><img class="rounded-circle img-fluid"
+                                                 src="{% static 'templatestyle/assets/img/about/3.jpg' %}"
+                                                 alt="..."/></div>
+                <div class="timeline-panel">
+                    <div class="timeline-heading">
+                        <h4>Profesjonalizm</h4>
+                        <h4 class="subheading">potwierdzony wieloma rekomendacjami</h4>
+                    </div>
+                    <div class="timeline-body"><p class="text-muted">"Świetnie zachowany balans pomiędzy potrzebą pewnej dyscypliny czasowej ,a spokojnym niespiesznym napawaniem się urokami Gruzji.Wartościa dodaną było spotkanie grupy niesamowitych ludzi..."</p></div>
+                </div>
+            </li>
+
+
+        </ul>
+    </div>
+</section>
+<!-- Team-->
+<section class="page-section bg-light" id="team">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">Nasi przewodnicy</h2>
+        </div>
+        <div class="row">
+            <div class=" align-center">
+                <div class="team-member">
+                    <img class="mx-auto rounded-circle" src="{% static 'templatestyle/assets/img/team/2.jpg' %}"
+                         alt="..."/>
+                    <h4>Wojtek Ziółkowski</h4>
+                    <p class="text-muted">Tour Project Manager</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center"><p class="large text-muted">"Gruzja powinna być zakończeniem, a nie początkiem. Wszystko tu stwarza wrażenie przybicia do przystani, dotarcia pod dach. Wszystko – klimat, krajobraz i obyczaje – namawia, żeby przysiąść w cieniu, łyknąć wina, odetchnąć i pomyśleć: fajnie tu."</p></div>
+        </div>
+    </div>
+</section>
+<footer class="footer py-4 bg-black">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="text-white-50">Copyright &copy; Wojtek Ziółkowski for Coders Lab</div>
+            <div class="col-lg-4 my-3 my-lg-0">
+            </div>
+        </div>
+        </div>
+    </div>
+</footer>
+<!-- Portfolio Modals-->
