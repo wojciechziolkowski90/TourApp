@@ -9,9 +9,10 @@ from django.conf import settings
 
 from django.views import View
 from django.views.generic import ListView, DetailView, DeleteView, UpdateView, CreateView
+from rest_framework.generics import get_object_or_404
 
 from Tours_app.forms import LoginForm, SignUpForm, EmailForm
-from Tours_app.models import Tour, Review, TouristAttractions
+from Tours_app.models import Tour, Review, TouristAttractions, TourType, Post
 
 
 class HomePageView(View):
@@ -24,11 +25,24 @@ class AboutPageView(View):
         return render(request, 'about.html')
 
 
+
 class TourListView(ListView):
     def get(self, request):
         tours = Tour.objects.all()
+        types = TourType.objects.all()
+        return render(request, 'tourlist.html', {'objects': tours, 'types': types})
 
-        return render(request, 'tourlist.html', {'objects': tours})
+class CategoryButton(View):
+    def get(self, request, pk):
+        category = Tour.objects.filter(tour_type=pk)
+        return render(request, 'base.html', {'categories': category})
+
+
+
+class CategoryListView(ListView):
+    def get(self, request, pk):
+        category = Tour.objects.filter(tour_type=pk)
+        return render(request, 'categories.html', {'categories': category})
 
 
 class AddTourView(CreateView):
@@ -70,6 +84,7 @@ class LoginView(View):
             login(request, loginForm.user)
             return redirect("/")
         return render(request, 'loginform.html', {'form': loginForm})
+
 
 class LogoutView(View):
     def get(self, request):

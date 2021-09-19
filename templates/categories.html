@@ -81,14 +81,11 @@
     <div class="container">
         <div class="masthead-subheading">Sprawdź terminy</div>
         <div class="masthead-heading text-uppercase">WYCIECZKI DO GRUZJI</div>
-        <a class="btn btn-primary btn-xl text-uppercase" >Pokaż wycieczki</a>
+        <a class="btn btn-primary btn-xl text-uppercase" href="#nowy">Pokaż wycieczki</a>
     </div>
 </header>
-{% for cat in types%}
-    <a class="btn btn-primary btn-xl text-uppercase" href="{% url 'category' cat.id %}">Kategoria</a>
-{% endfor %}
-
-{% for item in objects %}
+{{ pk }}
+{% for item in categories %}
 
     <section class="page-section bg-light" id="portfolio2">
         <div class="col-lg-4 col-sm-6 mb-4" id="kafelkiwycieczek">

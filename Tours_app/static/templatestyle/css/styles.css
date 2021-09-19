@@ -12495,7 +12495,8 @@ section#contact form#contactForm :-ms-input-placeholder {
 
 #portfolio2 .portfolio-item {
     max-width: 26rem;
-margin: auto;
+    margin: auto;
+
 
 }
 
@@ -12656,7 +12657,10 @@ margin: auto;
 }
 
 #kafelkiwycieczek {
-    float: end;
+
+
+
+
 }
 
 #tourlist {
@@ -12664,7 +12668,18 @@ margin: auto;
     font-size: large;
     font-weight: bolder;
 }
-#wyloguj {
-
-
+#categories1 {
+    width: auto;
+    text-align: center;
+    font-family: Calibri;
+    font-size: 20px!important;
+    float: left!important;
+    padding-right: 20px;
+    justify-content: space-between;
+    flex: auto;
+    align-items: center;
 }
+.category {
+width: auto;
+}
+

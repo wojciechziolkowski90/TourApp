@@ -18,7 +18,7 @@ class Region(models.Model):
         return f"{self.region_name}"
 
 class TourType(models.Model):
-    type = models.CharField(max_length=100)
+    type = models.CharField(max_length=100, db_index=True)
     slug = models.SlugField(max_length=150, unique=True)
 
     def __str__(self):
@@ -33,7 +33,7 @@ class Tour(models.Model):
     tour_start = models.DateField()
     tour_end = models.DateField()
     tour_attractions = models.ManyToManyField('TouristAttractions', through='AttractionPlan')
-    tour_type = models.ForeignKey(TourType, on_delete=models.CASCADE)
+    tour_type = models.ForeignKey(TourType, on_delete=models.CASCADE, related_name='types')
     tour_foto = models.ImageField(upload_to='Tours_app/static/images/', blank=True)
 
     def __str__(self):
@@ -93,3 +93,24 @@ class Review(models.Model):
     def __str__(self):
         return f"{self.user_name} {self.user_review}"
 
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+    def get_absolute_url(self):
+        return reverse('homepage')
+
+
+
+
+class Post(models.Model):
+    title = models.CharField(max_length=255)
+    category = models.CharField(max_length=255, default='treking')
+
+    def __str__(self):
+        return f" {self.title} {self.category}"
+    def get_absolute_url(self):
+        return reverse('category')

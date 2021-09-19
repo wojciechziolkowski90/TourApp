@@ -6,7 +6,7 @@ from django.urls import path, include
 from Tours_app import views
 from Tours_app.views import HomePageView, AboutPageView, LoginView, LogoutView, \
     TourListView, SignUp, DeleteTourView, UpdateTourView, AddTourView, ReviewView, AddReviewView, \
-    ContactView, TourDetails
+    ContactView, TourDetails, CategoryListView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,6 +23,6 @@ urlpatterns = [
     path('review/', ReviewView.as_view(), name='review'),
     path('tour/<int:pk>/', TourDetails.as_view(), name='tourdetails'),
     path('contact/', ContactView.as_view(), name='contact'),
+    path('kategorie/<str:pk>', CategoryListView.as_view(), name='category')
 
 ]
-
