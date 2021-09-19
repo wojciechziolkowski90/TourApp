@@ -79,7 +79,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'HOST': '127.0.0.1',
-        'NAME': 'Tour',
+        'NAME': 'Tours1',
         'USER': 'postgres',
         'PASSWORD': 'panwojtas',
     }
@@ -128,3 +128,14 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+DEFAULT_FROM_EMAIL = 'wojciech.ziolkow@gmail.com'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'wojciech.ziolkow@gmail.com'
+EMAIL_HOST_PASSWORD = 'panwojtas1990z'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True

@@ -1,18 +1,141 @@
-{% extends 'navbar.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>Adventure Tour - Georgia</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="../Tours_app/static/templatestyle/assets/favicon.ico"/>
+    <!-- Font Awesome icons (free version)-->
+    <script src="{% static 'templatestyle/js/scripts.js' %}"></script>
+    <link href="{% static 'templatestyle/css/styles.css' %}" rel="stylesheet">
+    <!-- Google fonts-->
+            <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css"/>
+            <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css"/>
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <style>
+        #logo {
+            height: 100px;
+            width: 150px;
+        }
+    </style>
+</head>
+<body id="page-top">
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+    <div class="container">
+        <a href="#page-top"> <img id="logo" src="{% static 'images/logo1.png' %}"></a>
 
-{% block content %}
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars ms-1"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                <li class="nav-item"><a class="nav-link" href="{% url 'homepage' %}">Strona
+                    Główna</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">o Nas</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'tourlist' %}">Wycieczki do Gruzji</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Kontakt</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'review' %}">Opinie</a></li>
+            </ul>
 
-    <h1 class="text-center">Wycieczki</h1>
+        </div>
+    </div>
+    <form class="d-flex">
+        {% if user.is_authenticated %}
+            <a href="{% url 'logout' %}"
+               class="nav-item nav-link">Wyloguj</a>
+        {% else %}
+            <a href="{% url 'login' %}"
+               class="nav-item nav-link">Zaloguj</a>
+        {% endif %}
+        <a href="{% url 'signup' %}"
+           class="nav-item nav-link">Rejestracja</a>
+    </form>
 
-    <ul class="list-group">
-        {% for item in objects %}
-            <li class="list-group-item m-1"> {{ item.tour_name }}
-                <ul class="list-group list-group-horizontal">
-                    <a class="list-group-item list-group-item-action">Edytuj </a>
-                    <a class="list-group-item list-group-item-action" href="{% url 'tourdetails' %}">Szczegóły </a>
-                    <a class="list-group-item list-group-item-action" >Usuń </a>
-                </ul>
-            </li>
-        {% endfor %}
+
     </ul>
-{% endblock %}
+
+
+    </div>
+    </div>
+    <div>
+        <a href="{{ request.META.HTTP_REFERER }}"
+           class="nav-item nav-link">Powrót</a>
+    </div>
+</nav>
+<header class="masthead">
+    <div class="container">
+        <div class="masthead-subheading">Sprawdź terminy</div>
+        <div class="masthead-heading text-uppercase">WYCIECZKI DO GRUZJI</div>
+        <a class="btn btn-primary btn-xl text-uppercase" href="#nowy">Pokaż wycieczki</a>
+    </div>
+</header>
+{% for item in objects %}
+
+    <section class="page-section bg-light" id="portfolio2">
+        <div class="col-lg-4 col-sm-6 mb-4" id="kafelkiwycieczek">
+            <!-- Portfolio item 1-->
+            <div class="portfolio-item">
+                <a href="/tour/{{ item.id }}"> <img class="img-fluid" src="{{ item.tour_foto }}"
+                                                    alt="gruzja"></a>
+                <div class="portfolio-caption">
+                    <h2 class="text-center">{{ item.tour_name }} </h2>
+                    <div class="text-center">
+                        <a class="btn btn-primary btn-xl text-uppercase"
+                            href="/tour/{{ item.id }}">Plan Wycieczki</a>
+                    </div>
+                    <br>
+                    <div class="text-center">
+                        <a class="btn btn-primary text-center" href="{% url 'tourupdate' item.id %}">Edytuj </a>
+                        <a class="btn btn-secondary text-center" href="{% url 'tourdelete' item.id %}">Usuń </a><br>
+                    </div>
+                    <div class="text-left">
+                        <ul class="table">
+                            <a id="tourlist">ILOŚĆ DNI: </a> {{ item.tour_days }}<br>
+                            <a id="tourlist">DATA ROZPOCZĘCIA: </a> {{ item.tour_start|date:'d-m-Y' }} <br>
+                            <a id="tourlist">POWRÓT: </a> {{ item.tour_end|date:'d-m-Y' }}<br>
+                            <a id="tourlist">RODZAJ WYCIECZKI: </a>{{ item.tour_type }}<br>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        </div>
+
+    </section>
+{% endfor %}
+
+<section>
+
+</section>
+<footer class="footer py-4 bg-black">
+    <div class="container">
+        <div class="row align-items-center">
+            <div>
+                <a id="dodajwycieczke" class="btn btn-secondary" href="{% url 'addtour' %}">Dodaj Nową Wycieczkę </a>
+
+            </div>
+            <div class="text-white-50 float-lg-start"> Copyright &copy; Wojtek Ziółkowski for Coders Lab</div>
+            <div class="col-lg-4 my-3 my-lg-0">
+            </div>
+
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
+
+
+
+
+
+
+
