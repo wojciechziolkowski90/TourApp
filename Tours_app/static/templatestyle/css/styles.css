@@ -239,12 +239,12 @@ sup {
 }
 
 a {
-    color: #ffc800;
-    text-decoration: underline;
+    color: darkred;
+    text-decoration: none
 }
 
 a:hover {
-    color: #cca000;
+    color: #6a1a21;
 }
 
 a:not([href]):not([class]), a:not([href]):not([class]):hover {
@@ -3194,14 +3194,14 @@ textarea.form-control-lg {
 
 .btn-primary {
     color: #fff;
-    background-color: #ffc800;
-    border-color: #ffc800;
+    background-color: darkred;
+    border-color: darkred;
 }
 
 .btn-primary:hover {
     color: #fff;
-    background-color: #d9aa00;
-    border-color: #cca000;
+    background-color: #6a1a21;
+    border-color: #6a1a21;
 }
 
 .btn-check:focus + .btn-primary, .btn-primary:focus {
@@ -12680,6 +12680,23 @@ section#contact form#contactForm :-ms-input-placeholder {
     align-items: center;
 }
 .category {
-width: auto;
+    margin-top: 20px;
+    text-align: center;
+    align-content: center;
+    justify-content: space-evenly;
+}
+
+.btn-cat{
+    background-color: darkred;
+    color: white;
+}
+
+.container2 {
+    width: 50%;
+    float: left;
+    padding-right: var(--bs-gutter-x, 0.75rem);
+    padding-left: var(--bs-gutter-x, 0.75rem);
+    margin-right: auto;
+    margin-left: auto;
 }
 

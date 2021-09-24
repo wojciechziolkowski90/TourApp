@@ -10,6 +10,8 @@ Attracion_Type = [
     (4, 'Aktywna'),
     (5, 'Winiarska'),
 ]
+
+
 class Region(models.Model):
     region_name = models.CharField(max_length=100)
     region_description = models.CharField(max_length=255)
@@ -17,7 +19,8 @@ class Region(models.Model):
     def __str__(self):
         return f"{self.region_name}"
 
-class TourType(models.Model):
+
+class Category(models.Model):
     type = models.CharField(max_length=100, db_index=True)
     slug = models.SlugField(max_length=150, unique=True)
 
@@ -27,21 +30,21 @@ class TourType(models.Model):
     def get_absolute_url(self):
         return reverse('tourlist', kwargs={'pk': self.pk})
 
+
 class Tour(models.Model):
     tour_name = models.CharField(max_length=255)
-    tour_days = models.IntegerField()
+    tour_days = models.IntegerField(null=True)
     tour_start = models.DateField()
     tour_end = models.DateField()
     tour_attractions = models.ManyToManyField('TouristAttractions', through='AttractionPlan')
-    tour_type = models.ForeignKey(TourType, on_delete=models.CASCADE, related_name='types')
-    tour_foto = models.ImageField(upload_to='Tours_app/static/images/', blank=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='types')
+    tour_foto = models.ImageField(upload_to='Tours_app/static/images/', null=True, blank=True)
 
     def __str__(self):
-        return f"{self.tour_name} {self.tour_days} {self.tour_type}"
+        return f"{self.tour_name} {self.tour_days} {self.category}"
 
     def get_absolute_url(self):
         return reverse('tourdetails', kwargs={'pk': self.pk})
-
 
     def get_all_tour_attractions(self):
         days = DayName.objects.order_by('order')
@@ -64,7 +67,7 @@ class TouristAttractions(models.Model):
 
 
 class DayName(models.Model):
-    class DayNames(models.IntegerChoices):
+    class DayNames(models.Choices):
         Poniedziałek = 1
         Wtorek = 2
         Środa = 3
@@ -94,23 +97,12 @@ class Review(models.Model):
         return f"{self.user_name} {self.user_review}"
 
 
-
-class Category(models.Model):
-    name = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.name
-    def get_absolute_url(self):
-        return reverse('homepage')
-
-
-
-
-class Post(models.Model):
-    title = models.CharField(max_length=255)
-    category = models.CharField(max_length=255, default='treking')
-
-    def __str__(self):
-        return f" {self.title} {self.category}"
-    def get_absolute_url(self):
-        return reverse('category')
+# class UserReservations(models.Model):
+#     imie = models.CharField(max_length=100)
+#     nazwisko = models.TextField()
+#     e_mail = models.EmailField()
+#     wycieczka = models.ForeignKey(Tour)
+#
+#
+#     def __str__(self):
+#         return f"{self.imie} {self.nazwisko} "

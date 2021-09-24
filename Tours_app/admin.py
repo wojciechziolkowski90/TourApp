@@ -1,5 +1,5 @@
 from django.contrib import admin
-from Tours_app.models import Tour, Region, TouristAttractions, AttractionPlan, DayName, TourType, Post, Category
+from Tours_app.models import Tour, Region, TouristAttractions, AttractionPlan, DayName, Category
 
 
 @admin.register(Region)
@@ -9,7 +9,7 @@ class RegionAdmin(admin.ModelAdmin):
 
 @admin.register(Tour)
 class TourAdmin(admin.ModelAdmin):
-    list_display = ['id', 'tour_name', 'tour_type']
+    list_display = ['id', 'tour_name', 'category']
 
 
 @admin.register(TouristAttractions)
@@ -27,11 +27,8 @@ class DayNameAdmin(admin.ModelAdmin):
     list_display = ['day_name']
 
 
-@admin.register(TourType)
+@admin.register(Category)
 class TourTypeAdmin(admin.ModelAdmin):
     list_display = ['type']
-
-admin.site.register(Post)
-admin.site.register(Category)
 
 

@@ -9,10 +9,9 @@ from django.conf import settings
 
 from django.views import View
 from django.views.generic import ListView, DetailView, DeleteView, UpdateView, CreateView
-from rest_framework.generics import get_object_or_404
 
 from Tours_app.forms import LoginForm, SignUpForm, EmailForm
-from Tours_app.models import Tour, Review, TouristAttractions, TourType, Post
+from Tours_app.models import Tour, Review, Category
 
 
 class HomePageView(View):
@@ -25,24 +24,17 @@ class AboutPageView(View):
         return render(request, 'about.html')
 
 
-
 class TourListView(ListView):
     def get(self, request):
         tours = Tour.objects.all()
-        types = TourType.objects.all()
+        types = Category.objects.all()
         return render(request, 'tourlist.html', {'objects': tours, 'types': types})
-
-class CategoryButton(View):
-    def get(self, request, pk):
-        category = Tour.objects.filter(tour_type=pk)
-        return render(request, 'base.html', {'categories': category})
-
 
 
 class CategoryListView(ListView):
     def get(self, request, pk):
-        category = Tour.objects.filter(tour_type=pk)
-        return render(request, 'categories.html', {'categories': category})
+        category = Category.objects.get(pk=pk)
+        return render(request, 'categories.html', {'category': category})
 
 
 class AddTourView(CreateView):
@@ -58,11 +50,12 @@ class AddTourView(CreateView):
 
 class UpdateTourView(UpdateView):
     model = Tour
-    fields = '__all__'
+    fields = ['tour_name','tour_days', 'tour_start', 'tour_end', 'category']
     template_name = 'tourupdate.html'
 
     def get_success_url(self):
         tour = self.object
+        tour.save()
         url = reverse('tourlist')
         return url
 
@@ -120,7 +113,7 @@ class AddReviewView(CreateView):
 class ReviewView(ListView):
     def get(self, request):
         reviews = Review.objects.all()
-        return render(request, 'review.html', {'reviews': reviews})
+        return render(request, 'reviewlist.html', {'reviews': reviews})
 
 
 class TourDetails(DetailView):
@@ -130,7 +123,7 @@ class TourDetails(DetailView):
 
     def get_success_url(self):
         tour = self.object
-        url = reverse('attractions', args=(tour.id))
+        url = reverse('tourdetails', args=(tour.id))
         return url
 
 

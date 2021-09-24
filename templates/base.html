@@ -128,21 +128,21 @@
 <section class="page-section bg-light" id="portfolio">
     <div class="container">
         <div class="text-center">
-            <h2 class="section-heading text-uppercase"><a href="{% url 'tourlist' %}"> Podróże do Gruzji</a></h2>
+            <h2 class="section-heading text-uppercase"><a href="{% url 'tourlist' %}"> Sprawdź terminy</a></h2>
             <h3 class="section-subheading text-muted"></h3>
         </div>
         <div class="row">
             <div class="col-lg-4 col-sm-6 mb-4">
                 <!-- Portfolio item 1-->
                  <div class="portfolio-item">
-                    <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal2">
+                    <a class="portfolio-link" data-bs-toggle="modal" href="{% url 'tourlist' %}" >
                         <div class="portfolio-hover">
                             <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                         </div>
-                        <img class="img-fluid" src="{% static 'images/home.jpg' %}" alt="kirgistan">
+                        <img class="img-fluid" src="{% static 'images/home.jpg' %}" alt="gruzja">
                     </a>
                     <div class="portfolio-caption">
-                        <div class="portfolio-caption-heading">Treking</div>
+                        <div class="portfolio-caption-heading" >Treking</div>
                         <div class="portfolio-caption-subheading text-muted">Graphic Design</div>
                     </div>
                 </div>
@@ -150,11 +150,11 @@
             <div class="col-lg-4 col-sm-6 mb-4">
                 <!-- Portfolio item 2-->
                 <div class="portfolio-item">
-                    <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal2">
+                    <a class="portfolio-link" data-bs-toggle="modal" href="{% url 'tourlist' %}" >
                         <div class="portfolio-hover">
                             <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                         </div>
-                        <img class="img-fluid" src="{% static 'images/gruzja.JPG' %}" alt="kirgistan">
+                        <img class="img-fluid" src="{% static 'images/gruzja.JPG' %}" href="{% url 'tourlist' %}" alt="gruzja">
                     </a>
                     <div class="portfolio-caption">
                         <div class="portfolio-caption-heading">Wine Tour</div>
@@ -165,11 +165,11 @@
             <div class="col-lg-4 col-sm-6 mb-4">
                 <!-- Portfolio item 3-->
                 <div class="portfolio-item">
-                    <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal3">
+                    <a class="portfolio-link" data-bs-toggle="modal" href="{% url 'tourlist' %}" >
                         <div class="portfolio-hover">
                             <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                         </div>
-                        <img class="img-fluid" src="{% static 'images/auto.JPG' %}" alt="kirgistan">
+                        <img class="img-fluid" src="{% static 'images/auto.JPG' %}"  href="{% url 'tourlist' %}" alt="gruzja">
                     </a>
                     <div class="portfolio-caption">
                         <div class="portfolio-caption-heading">Off Road</div>
@@ -180,11 +180,11 @@
             <div class="col-lg-4 col-sm-6 mb-4 mb-lg-0">
                 <!-- Portfolio item 4-->
                 <div class="portfolio-item">
-                    <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal4">
+                    <a class="portfolio-link" data-bs-toggle="modal" href="{% url 'tourlist' %}" >
                         <div class="portfolio-hover">
                             <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                         </div>
-                        <img class="img-fluid" src="{% static 'images/taniec.JPG' %}" alt="kirgistan">
+                        <img class="img-fluid" src="{% static 'images/taniec.JPG' %}"  href="{% url 'tourlist' %}" alt="gruzja">
                     </a>
                     <div class="portfolio-caption">
                         <div class="portfolio-caption-heading">Kulturowo</div>
@@ -195,11 +195,11 @@
             <div class="col-lg-4 col-sm-6 mb-4 mb-sm-0">
                 <!-- Portfolio item 5-->
                 <div class="portfolio-item">
-                    <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal5">
+                    <a class="portfolio-link" data-bs-toggle="modal" href="{% url 'tourlist' %}" >
                         <div class="portfolio-hover">
                             <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                         </div>
-                        <img class="img-fluid" src="{% static 'images/zima2.JPG' %}" alt="kirgistan">
+                        <img class="img-fluid" src="{% static 'images/zima2.JPG' %}"  href="{% url 'tourlist' %}" alt="gruzja">
                     </a>
                     <div class="portfolio-caption">
                         <div class="portfolio-caption-heading">Narty w Gruzji</div>
@@ -210,11 +210,11 @@
             <div class="col-lg-4 col-sm-6">
                 <!-- Portfolio item 6-->
                 <div class="portfolio-item">
-                    <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal6">
+                    <a class="portfolio-link" data-bs-toggle="modal" href="{% url 'tourlist' %}" >
                         <div class="portfolio-hover">
                             <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                         </div>
-                        <img class="img-fluid" src="{% static 'images/fotopoza.JPG' %}" alt="kirgistan">
+                        <img class="img-fluid" src="{% static 'images/fotopoza.JPG' %}"  href="{% url 'tourlist' %}" alt="gruzja">
                     </a>
                     <div class="portfolio-caption">
                         <div class="portfolio-caption-heading">Fotowyprawy</div>
