@@ -1,7 +1,6 @@
 from django import forms
 from django.contrib.auth import authenticate
-from jsonschema import ValidationError
-
+from django.core.exceptions import ValidationError
 
 
 class LoginForm(forms.Form):
@@ -12,7 +11,7 @@ class LoginForm(forms.Form):
         data = super().clean()
         self.user = authenticate(**data)
         if self.user is None:
-            raise ValidationError("nie poprawne dane logowania")
+            raise ValidationError("Podaj poprawne dane logowania")
         return data
 
 class SignUpForm(forms.Form):
@@ -23,7 +22,7 @@ class SignUpForm(forms.Form):
     def clean(self):
         data = super().clean()
         if data.get('password') != data.get('re_password'):
-            raise ValidationError("hasła się nie zgadzają")
+            raise ValidationError("Hasła muszą się zgadzać")
         return data
 
 

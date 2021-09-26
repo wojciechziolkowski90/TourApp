@@ -46,18 +46,20 @@
 
         </div>
     </div>
-    <form class="d-flex">
+ <form class="d-flex">
         {% if user.is_authenticated %}
             <a href="{% url 'logout' %}"
                class="nav-item nav-link">Wyloguj</a>
         {% else %}
+
             <a href="{% url 'login' %}"
                class="nav-item nav-link">Zaloguj</a>
-        {% endif %}
-        <a href="{% url 'signup' %}"
-           class="nav-item nav-link">Rejestracja</a>
-    </form>
 
+                <a href="{% url 'signup' %}"
+            class="nav-item nav-link">Rejestracja</a>
+        {% endif %}
+
+    </form>
 
     </ul>
 
@@ -77,19 +79,15 @@
     </div>
 </header>
 <br>
-<form method="post" class="bg-white">
+<div class="container" id="kontakt">
+    <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <input
-                            type="submit"
-                            class="btn btn-primary"
-                            style="width: 150px"
-                            value="Wyślij opinię"
-                    />
+    <input type="submit" class="btn btn-primary" style="width: 150px" value="Wyślij opinię"/>
 </form>
-
 </div>
-</section>
+
+
 <section>
 
 </section>
