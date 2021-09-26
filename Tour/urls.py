@@ -1,12 +1,15 @@
 from urllib import request
 
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
 from Tours_app import views
+from Tours_app.models import UserReservation
 from Tours_app.views import HomePageView, AboutPageView, LoginView, LogoutView, \
     TourListView, SignUp, DeleteTourView, UpdateTourView, AddTourView, ReviewView, AddReviewView, \
-    ContactView, TourDetails, CategoryListView
+    ContactView, TourDetails, CategoryListView, ReservationView, ReservationList
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,6 +26,11 @@ urlpatterns = [
     path('opinie/', ReviewView.as_view(), name='review'),
     path('wycieczka/<int:pk>/', TourDetails.as_view(), name='tourdetails'),
     path('kontakt/', ContactView.as_view(), name='contact'),
-    path('kategorie/<str:pk>', CategoryListView.as_view(), name='category')
+    path('kategorie/<str:pk>', CategoryListView.as_view(), name='category'),
+    path('rezerwacja/', ReservationView.as_view(), name='reservation'),
+    path('lista-rezerwacji/', ReservationList.as_view(), name='reservationlist'),
 
-]
+
+
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

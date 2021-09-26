@@ -1,5 +1,4 @@
-from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login, logout
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.http import HttpResponse
@@ -11,7 +10,7 @@ from django.views import View
 from django.views.generic import ListView, DetailView, DeleteView, UpdateView, CreateView
 
 from Tours_app.forms import LoginForm, SignUpForm, EmailForm
-from Tours_app.models import Tour, Review, Category
+from Tours_app.models import Tour, Review, Category, UserReservation
 
 
 class HomePageView(View):
@@ -39,7 +38,7 @@ class CategoryListView(ListView):
 
 class AddTourView(CreateView):
     model = Tour
-    fields = '__all__'
+    fields = ['tour_name', 'tour_days', 'tour_start', 'tour_end', 'category', 'tour_price']
     template_name = 'touraddform.html'
 
     def get_success_url(self):
@@ -50,7 +49,7 @@ class AddTourView(CreateView):
 
 class UpdateTourView(UpdateView):
     model = Tour
-    fields = ['tour_name','tour_days', 'tour_start', 'tour_end', 'category']
+    fields = ['tour_name', 'tour_days', 'tour_start', 'tour_end', 'category', 'tour_price']
     template_name = 'tourupdate.html'
 
     def get_success_url(self):
@@ -139,7 +138,7 @@ class ContactView(View):
             subject = "Kontakt z adventuretours"
             imie = cd['imie']
             tekst = cd['tekst']
-            send_mail(subject, imie, tekst, settings.DEFAULT_FROM_EMAIL, [cd['Odbiorca: ']])
+            send_mail(subject, imie, settings.DEFAULT_FROM_EMAIL, [cd['odbiorca']])
             messageSent = True
         else:
             form = EmailForm()
@@ -148,3 +147,21 @@ class ContactView(View):
             'messageSent': messageSent,
 
         })
+
+
+class ReservationView(CreateView):
+    model = UserReservation
+    fields = '__all__'
+    template_name = 'reservationform.html'
+
+    def get_success_url(self):
+        url = reverse('reservation')
+        return url
+
+class ReservationList(View):
+    def get(self, request):
+        tour = Tour.objects.all()
+        reservation = UserReservation.objects.all()
+        return render(request, 'reservationlist.html', {'reservation': reservation, 'tour': tour})
+
+

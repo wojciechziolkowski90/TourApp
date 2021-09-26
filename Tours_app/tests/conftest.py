@@ -1,19 +1,17 @@
-from datetime import datetime, date
-
 import pytest
 
-from Tours_app.models import Tour, Review, Category
+from Tours_app.models import Tour, Review, Category, UserReservation
 
 
 @pytest.fixture
-def tourType():
+def category():
     x = Category(type='a', slug='b')
     x.save()
     return x
 
 
 @pytest.fixture
-def tours(tourType):
+def tours(category):
     lst = []
     for i in range(2):
         a = Tour.objects.create(
@@ -21,7 +19,8 @@ def tours(tourType):
             tour_days=1,
             tour_start='2021-9-21',
             tour_end='2021-9-26',
-            tour_type=tourType,
+            tour_price=5000,
+            category=category,
         )
         lst.append(a)
     return lst
@@ -35,3 +34,12 @@ def reviews():
                                   user_review=i)
         lst.append(a)
     return lst
+
+
+@pytest.fixture
+def reservation(tours):
+    res = []
+    for r in range(5):
+        x = UserReservation.objects.create(name='wojtek', surname='ziolkow', e_mail='w@wp.pl', wycieczka=tours)
+        res.append(x)
+    return res

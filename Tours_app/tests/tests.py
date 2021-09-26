@@ -29,11 +29,6 @@ def test_TourListView():
     assert tours.count() == 0
     assert response.status_code == 200
 
-
-#CategoryListView
-
-
-
 # Add tour view
 @pytest.mark.django_db
 def test_AddTour(tours):
@@ -135,5 +130,16 @@ def test_Contact_View():
     c = Client()
     response = c.get("/kontakt/")
     assert response.status_code == 200
+
+
+#ReservationListView
+@pytest.mark.django_db
+def test_ReservationList():
+    c = Client()
+    response = c.get("/lista-rezerwacji/")
+    res = response.context['reservation']
+    assert res.count() == 0
+    assert response.status_code == 200
+
 
 

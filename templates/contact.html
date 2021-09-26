@@ -1,73 +1,6 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <meta name="description" content=""/>
-    <meta name="author" content=""/>
-    <title>Adventure Tour - Georgia</title>
-    <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="../Tours_app/static/templatestyle/assets/favicon.ico"/>
-    <!-- Font Awesome icons (free version)-->
-    <script src="{% static 'templatestyle/js/scripts.js' %}"></script>
-    <link href="{% static 'templatestyle/css/styles.css' %}" rel="stylesheet">
+{% extends 'navbar.html' %}
+{% block content %}
 
-    <style>
-        #logo {
-            height: 100px;
-            width: 150px;
-        }
-    </style>
-</head>
-<body id="page-top">
-<!-- Navigation-->
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
-    <div class="container">
-        <a href="#page-top"> <img id="logo" src="{% static 'images/logo1.png' %}"></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            Menu
-            <i class="fas fa-bars ms-1"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                <li class="nav-item"><a class="nav-link" href="{% url 'homepage' %}">Strona
-                    Główna</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">o Nas</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'tourlist' %}">Wycieczki do Gruzji</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Kontakt</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'review' %}">Opinie</a></li>
-            </ul>
-
-        </div>
-    </div>
-    <form class="d-flex">
-        {% if user.is_authenticated %}
-            <a href="{% url 'logout' %}"
-               class="nav-item nav-link">Wyloguj</a>
-        {% else %}
-
-            <a href="{% url 'login' %}"
-               class="nav-item nav-link">Zaloguj</a>
-
-                <a href="{% url 'signup' %}"
-            class="nav-item nav-link">Rejestracja</a>
-        {% endif %}
-
-    </form>
-
-
-    </ul>
-
-
-    </div>
-    </div>
-    <div>
-        <a href="{{ request.META.HTTP_REFERER }}"
-           class="nav-item nav-link">Powrót</a>
-    </div>
-</nav>
 <header class="masthead">
     <div class="container">
 
@@ -78,18 +11,41 @@
 
 {% if messageSent %}
     <div class="container">
-        <h3><strong>Email successfully sent</strong></h3>
-        <p>Your message was successfully sent to {{ form.cleaned_data.to }}</p>
+        <h3><strong>Dziękujemy za wiadomość</strong></h3>
+        <p>Email został wysłany</p>
+          <div class="text-center">
+                        <a class="btn btn-primary text-center" href="{% url 'tourlist' %}">Powrót do listy wycieczek</a>
+          </div>
     </div>
 {% else %}
     <br>
+<div id="kontakt">
+</div>
+
+<div class="align-center">
+       <div class="container">
+           <br><br>
+        <a  class="fw-bolder">ZAPRASZAMY DO KONTAKTU DO NASZYCH DWÓCH BIUR</a><br>
+      <a>POLSKA:<br>
+          Wojtek Ziółkowski<br>
+       Karpia 25 61-619 Poznań<br>
+       kontakt: wojciech.ziolkow@gmail.com<br>
+       <br>
+       GRUZJA:<br>
+          Valter Planishvili<br>
+       Varketili 5, Tbilisi<br>
+       kontakt: wojciechziolkowskiproject@gmail.com<br>
+       </a>
+    <br><br>
+    </div>
     <div class="container">
-    <div id="kontakt">WYPEŁNIJ FORMULARZ:</div>
+    <div id="kontakt" class="fw-bolder">WYPEŁNIJ FORMULARZ:</div>
+
+
     <div>
         <br>
-        <br>
     </div>
-        {% block content %}
+
             <form method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
@@ -98,8 +54,9 @@
                     <input type="submit"  class="btn btn-primary" style="width: 150px" value="Wyślij" />
                 </div>
             </form>
-        {% endblock %}
+
     </div>
+</div>
 {% endif %}
 
 
@@ -120,8 +77,4 @@
             </div>
         </div>
     </footer>
-
-
-
-</body>
-</html>
+{% endblock %}
