@@ -7,27 +7,28 @@
     <meta name="description" content=""/>
     <meta name="author" content=""/>
     <title>Adventure Tour - Georgia</title>
-    <!-- Favicon-->
+      <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="../Tours_app/static/templatestyle/assets/favicon.ico"/>
     <!-- Font Awesome icons (free version)-->
     <script src="{% static 'templatestyle/js/scripts.js' %}"></script>
     <link href="{% static 'templatestyle/css/styles.css' %}" rel="stylesheet">
     <!-- Google fonts-->
-    {#        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css"/>#}
-    {#        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css"/>#}
+    {#            <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css"/>#}
+    {#            <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css"/>#}
     <!-- Core theme CSS (includes Bootstrap)-->
- <style>
-        #logo {
-            height: 100px;
-            width: 150px;
-        }
-    </style>
+
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css"/>
+
 </head>
 <body id="page-top">
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
     <div class="container">
-        <a href="#page-top"> <img id="logo" src="{% static 'images/logo1.png' %}"></a>
+        <a href="{% url 'homepage' %}"> <img id="logo" src="{% static 'images/logo3.png' %}"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             Menu
@@ -39,14 +40,13 @@
                     Główna</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">o Nas</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'tourlist' %}">Wycieczki do Gruzji</a></li>
-
                 <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Kontakt</a></li>
-                 <li class="nav-item"><a class="nav-link" href="{% url 'review' %}">Opinie</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'review' %}">Opinie</a></li>
             </ul>
 
         </div>
     </div>
-          <form class="d-flex">
+    <form class="d-flex">
         {% if user.is_authenticated %}
             <a href="{% url 'logout' %}"
                class="nav-item nav-link">Wyloguj</a>
@@ -62,23 +62,16 @@
     </form>
 
 
-            </ul>
+    </ul>
 
 
-        </div>
+    </div>
     </div>
     <div>
         <a href="{{ request.META.HTTP_REFERER }}"
            class="nav-item nav-link">Powrót</a>
     </div>
 </nav>
-<header class="masthead">
-    <div class="container">
-        <div class="masthead-subheading">Wycieczki do Gruzji</div>
-        <div class="masthead-heading text-uppercase">Adventure Tours</div>
-        <a class="btn btn-primary btn-xl text-uppercase" href="#services">Pokaż wycieczki</a>
-    </div>
-</header>
 {% block content %}
 {% endblock %}
 </body>

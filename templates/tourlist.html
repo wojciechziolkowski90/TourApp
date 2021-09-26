@@ -1,98 +1,19 @@
+{% extends 'navbar.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <meta name="description" content=""/>
-    <meta name="author" content=""/>
-    <title>Adventure Tour - Georgia</title>
-    <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="../Tours_app/static/templatestyle/assets/favicon.ico"/>
-    <!-- Font Awesome icons (free version)-->
-    <script src="{% static 'templatestyle/js/scripts.js' %}"></script>
-    <link href="{% static 'templatestyle/css/styles.css' %}" rel="stylesheet">
-    <!-- Google fonts-->
-    {#            <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css"/>#}
-    {#            <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css"/>#}
-    <!-- Core theme CSS (includes Bootstrap)-->
-    <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
-    <!-- Font Awesome icons (free version)-->
-    <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
-    <!-- Google fonts-->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css"/>
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css"/>
-    <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="css/styles.css" rel="stylesheet"/>
-    <style>
-        #logo {
-            height: 100px;
-            width: 150px;
-        }
-    </style>
-</head>
-<body>
-<!-- Navigation-->
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
-    <div class="container">
-        <a href="#page-top"> <img id="logo" src="{% static 'images/logo1.png' %}"></a>
-
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            Menu
-            <i class="fas fa-bars ms-1"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                <li class="nav-item"><a class="nav-link" href="{% url 'homepage' %}">Strona Główna</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">o Nas</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'tourlist' %}">Wycieczki do Gruzji</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Kontakt</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'review' %}">Opinie</a></li>
-            </ul>
-
-        </div>
-    </div>
-     <form class="d-flex">
-        {% if user.is_authenticated %}
-            <a href="{% url 'logout' %}"
-               class="nav-item nav-link">Wyloguj</a>
-        {% else %}
-
-            <a href="{% url 'login' %}"
-               class="nav-item nav-link">Zaloguj</a>
-
-                <a href="{% url 'signup' %}"
-            class="nav-item nav-link">Rejestracja</a>
-        {% endif %}
-
-    </form>
-
-
-    </ul>
-
-
-    </div>
-    </div>
-    <div>
-        <a href="{{ request.META.HTTP_REFERER }}"
-           class="nav-item nav-link">Powrót</a>
-    </div>
-</nav>
+{% block content %}
 <header class="masthead">
     <div class="container">
         <div class="masthead-subheading">Sprawdź terminy</div>
         <div class="masthead-heading text-uppercase">WYCIECZKI DO GRUZJI</div>
-        <a class="btn btn-primary btn-xl text-uppercase" href="#categories" >Pokaż wycieczki</a>
+        <a class="btn btn-primary btn-xl text-uppercase" href="#categories">Pokaż wycieczki</a>
     </div>
 </header>
 
 <div class="category" id="categories">
 
-    {% for cat in types%}
-    <a class="btn btn-cat btn-xl text-uppercase align-center" href="{% url 'category' cat.id %}">{{ cat.type }}</a>
-{% endfor %}
+    {% for cat in types %}
+        <a class="btn btn-cat btn-xl text-uppercase align-center" href="{% url 'category' cat.id %}">{{ cat.type }}</a>
+    {% endfor %}
 
 </div>
 
@@ -103,7 +24,7 @@
             <!-- Portfolio item 1-->
             <div class="portfolio-item">
                 <a href="/wycieczka/{{ item.id }}"> <img class="img-fluid" src="{% static 'images/mapa.png' %}"
-                                                    alt="gruzja"></a>
+                                                         alt="gruzja"></a>
                 <div class="portfolio-caption">
                     <h2 class="text-center">{{ item.tour_name }}</h2>
                     <div class="text-center">
@@ -112,17 +33,18 @@
                     </div>
                     <br>
                     {% if user.is_superuser %}
-                    <div class="text-center">
-                        <a class="btn btn-primary text-center" href="{% url 'tourupdate' item.id %}">Edytuj </a>
-                        <a class="btn btn-secondary text-center" href="{% url 'tourdelete' item.id %}">Usuń </a><br>
-                    </div>
+                        <div class="text-center">
+                            <a class="btn btn-primary text-center" href="{% url 'tourupdate' item.id %}">Edytuj </a>
+                            <a class="btn btn-secondary text-center" href="{% url 'tourdelete' item.id %}">Usuń </a><br>
+                        </div>
                     {% endif %}
                     <div class="text-left">
                         <ul class="table">
                             <a id="tourlist">ILOŚĆ DNI: </a> {{ item.tour_days }}<br>
-                            <a id="tourlist">DATA ROZPOCZĘCIA: </a> {{ item.tour_start|date:'d-m-Y' }} <br>
+                            <a id="tourlist">ROZPOCZĘCIE: </a> {{ item.tour_start|date:'d-m-Y' }} <br>
                             <a id="tourlist">POWRÓT: </a> {{ item.tour_end|date:'d-m-Y' }}<br>
                             <a id="tourlist">RODZAJ WYCIECZKI: </a>{{ item.category }}<br>
+                            <a class="btn btn-secondary">CENA: {{ item.tour_price }} PLN </a><br>
                         </ul>
                     </div>
                 </div>
@@ -140,11 +62,11 @@
 <footer class="footer py-4 bg-black">
     <div class="container">
         <div class="row align-items-center">
-             {% if user.is_superuser %}
-            <div>
-                <a id="dodajwycieczke" class="btn btn-secondary" href="{% url 'addtour' %}">Dodaj Nową Wycieczkę </a>
-
-            </div>
+            {% if user.is_superuser %}
+                <div>
+                    <a class="nav-item nav-link" href="{% url 'addtour' %}">Dodaj Nową Wycieczkę </a>
+                    <a class="nav-item nav-link" href="{% url 'reservationlist' %}"> Lista rezerwacji</a>
+                </div>
             {% endif %}
             <div class="text-white-50 float-lg-start"> Copyright &copy; Wojtek Ziółkowski for Coders Lab</div>
             <div class="col-lg-4 my-3 my-lg-0">
@@ -153,10 +75,7 @@
         </div>
     </div>
 </footer>
-
-</body>
-</html>
-
+{% endblock %}
 
 
 

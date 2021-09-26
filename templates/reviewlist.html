@@ -1,84 +1,16 @@
+{% extends 'navbar.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <meta name="description" content=""/>
-    <meta name="author" content=""/>
-    <title>Adventure Tour - Georgia</title>
-    <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="../Tours_app/static/templatestyle/assets/favicon.ico"/>
-    <!-- Font Awesome icons (free version)-->
-    <script src="{% static 'templatestyle/js/scripts.js' %}"></script>
-    <link href="{% static 'templatestyle/css/styles.css' %}" rel="stylesheet">
-    <!-- Google fonts-->
-    {#        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css"/>#}
-    {#        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css"/>#}
-    <!-- Core theme CSS (includes Bootstrap)-->
-      <style>
-        #logo {
-            height: 100px;
-            width: 150px;
-        }
-    </style>
-</head>
-<body id="page-top">
-<!-- Navigation-->
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
-    <div class="container">
-         <a href="#page-top"> <img id="logo" src="{% static 'images/logo1.png' %}"></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            Menu
-            <i class="fas fa-bars ms-1"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                <li class="nav-item"><a class="nav-link" href="{% url 'homepage' %}">Strona
-                    Główna</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">o Nas</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'tourlist' %}">Wycieczki do Gruzji</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Kontakt</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'review' %}">Opinie</a></li>
-            </ul>
-
-        </div>
-    </div>
-     <form class="d-flex">
-        {% if user.is_authenticated %}
-            <a href="{% url 'logout' %}"
-               class="nav-item nav-link">Wyloguj</a>
-        {% else %}
-
-            <a href="{% url 'login' %}"
-               class="nav-item nav-link">Zaloguj</a>
-
-                <a href="{% url 'signup' %}"
-            class="nav-item nav-link">Rejestracja</a>
-        {% endif %}
-
-    </form>
-
-    </ul>
-
-
-    </div>
-    </div>
-    <div>
-        <a href="{{ request.META.HTTP_REFERER }}"
-           class="nav-item nav-link">Powrót</a>
-    </div>
-</nav>
+{% block content %}
 <header class="masthead">
     <div class="container">
 
         <div class="masthead-heading text-uppercase">PODZIEL SIĘ SWOIMI WRAŻENIAMI</div>
+          {% if user.is_authenticated %}
         <a class="btn btn-primary btn-xl text-uppercase" href="{% url 'addreview' %}">Dodaj nową opinię</a>
+        {% endif %}
     </div>
 </header>
 
-{% block content %}
 {% for item in reviews %}
     <section class="page-section" id="about">
     <div class="container">
@@ -92,8 +24,9 @@
             <div class="timeline-panel">
                 <div>
                     <a id="review">
-                        Imię: {{ item.user_name }} <br>
-                        Opinia: {{ item.user_review }}</a> <br>
+                        <a class="fw-bolder">{{ item.user_name }} <br></a>
+                       <a class="fst-italic"> "{{ item.user_review }}"</a> <br>
+                    </a>
                 </div>
             </div>
         </li>
@@ -102,7 +35,7 @@
 {% endfor %}
 </div>
 </section>
-{% endblock %}
+
 <section>
 
 </section>
@@ -119,6 +52,4 @@
         </div>
     </div>
 </footer>
-</body>
-
-</html>
+{% endblock %}
