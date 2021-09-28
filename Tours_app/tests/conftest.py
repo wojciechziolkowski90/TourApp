@@ -12,9 +12,7 @@ def category():
 
 @pytest.fixture
 def tours(category):
-    lst = []
-    for i in range(2):
-        a = Tour.objects.create(
+       a = Tour.objects.create(
             tour_name='kavkaz',
             tour_days=1,
             tour_start='2021-9-21',
@@ -22,8 +20,7 @@ def tours(category):
             tour_price=5000,
             category=category,
         )
-        lst.append(a)
-    return lst
+
 
 
 @pytest.fixture
@@ -43,3 +40,5 @@ def reservation(tours):
         x = UserReservation.objects.create(name='wojtek', surname='ziolkow', e_mail='w@wp.pl', wycieczka=tours)
         res.append(x)
     return res
+
+
