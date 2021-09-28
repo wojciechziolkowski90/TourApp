@@ -12,7 +12,7 @@ Attracion_Type = [
 
 
 class Region(models.Model):
-    region_name = models.CharField(max_length=100)
+    region_name = models.CharField(max_length=100)#to pole powinno nazywać sie name
     region_description = models.CharField(max_length=255)
 
     def __str__(self):
@@ -78,8 +78,6 @@ class Day(models.Model):
         Dzień_9 = 9
         Dzień_10 = 10
 
-
-
     day = models.PositiveIntegerField(choices=Day.choices)
     order = models.IntegerField(unique=True)
 
@@ -105,7 +103,7 @@ class UserReservation(models.Model):
     name = models.CharField('Imię', max_length=100)
     surname = models.CharField('Nazwisko', max_length=100)
     e_mail = models.EmailField()
-    wycieczka= models.ForeignKey(Tour, on_delete=models.CASCADE, null=True)
+    wycieczka = models.ForeignKey(Tour, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return f"{self.name} {self.surname} {self.e_mail}"
