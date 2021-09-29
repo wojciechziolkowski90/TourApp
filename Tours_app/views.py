@@ -25,7 +25,7 @@ class AboutPageView(View):
 
 class TourListView(ListView):
     def get(self, request):
-        tours = Tour.objects.filter(id__lte=-1)
+        tours = Tour.objects.all()
         types = Category.objects.all()
         return render(request, 'tourlist.html', {'objects':tours , 'types': types})
 
