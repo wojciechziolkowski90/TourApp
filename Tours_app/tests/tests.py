@@ -12,16 +12,14 @@ from Tours_app.models import Category, Tour, Review, AttractionPlan, Day, Touris
 
 
 # HomePageView
-def test_HomePageView():
-    c = Client()
-    response = c.get('/')
+def test_HomePageView(client):
+    response = client.get('/')
     assert response.status_code == 200
 
 
 # AboutView
-def test_AboutPageView():
-    c = Client()
-    response = c.get('/o-nas/')
+def test_AboutPageView(client):
+    response = client.get('/o-nas/')
     assert response.status_code == 200
 
 
@@ -49,6 +47,24 @@ def test_addtour(client):
     assert Tour.objects.last().tour_start == datetime.date(2021, 1, 1)
     assert Tour.objects.last().tour_end == datetime.date(2021, 1, 4)
     assert Tour.objects.last().tour_price == 99
+
+
+# CategoryView
+@pytest.mark.django_db
+def test_category(client):
+    category = Category.objects.create(type="Foto", slug="foto")
+    tour = Tour.objects.create(
+        tour_name="Kachetia",
+        tour_days=5,
+        tour_start="2021-01-01",
+        tour_end="2021-01-06",
+        tour_price=9999,
+        category=category,
+    )
+    response = client.get(
+        reverse("category"), args=[tour.id])
+
+    assert response.status_code == http.HTTPStatus.OK
 
 
 # TourListView
@@ -195,7 +211,7 @@ def test_failed_login(client):
 
 # LogoutView
 @pytest.mark.django_db
-def test_ok(client):
+def test_logout(client):
     user = User.objects.create_user(username="wojtek", password="wojtek8000")
     client.force_login(user)
 
@@ -243,6 +259,25 @@ def test_reviewlist(client):
 
 
 # TourDetails
+@pytest.mark.django_db
+def test_detailsview(client):
+    category = Category.objects.create(type="narty", slug="narty")
+    tour = Tour.objects.create(
+        tour_name="Narty",
+        tour_days=7,
+        tour_start="2021-01-01",
+        tour_end="2021-01-08",
+        tour_price=4999,
+        category=category,
+    )
+
+    response = client.post(
+        reverse("tourdetails", args=[tour.id]),
+    )
+
+    assert Tour.objects.filter(id=tour.id).exists()
+    assert Tour.objects.last().tour_name == "Narty"
+
 
 # ContactView
 @patch("Tours_app.views.send_mail")
