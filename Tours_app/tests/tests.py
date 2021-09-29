@@ -1,12 +1,14 @@
 import datetime
+from unittest.mock import patch
 
 import pytest, http
+from django.conf import settings
 from django.contrib.auth import get_user_model
 
 from django.contrib.auth.models import User
 from django.test import Client
 from django.urls import reverse, resolve
-from Tours_app.models import Category, Tour
+from Tours_app.models import Category, Tour, Review, AttractionPlan, Day, TouristAttractions, Region
 
 
 # HomePageView
@@ -104,6 +106,7 @@ def test_updateview(client):
     assert Tour.objects.get(id=tour.id).tour_end == datetime.date(2021, 1, 10)
     assert Tour.objects.get(id=tour.id).tour_price == 5000
 
+
 # DeleteTourView
 @pytest.mark.django_db
 def test_deleteview(client):
@@ -123,6 +126,7 @@ def test_deleteview(client):
 
     assert response.status_code == http.HTTPStatus.FOUND
     assert not Tour.objects.filter(id=tour.id).exists()
+
 
 # SignUp
 User = get_user_model()
@@ -155,6 +159,7 @@ def test_failed_signup(client):
     assert response.status_code == http.HTTPStatus.OK
     assert not User.objects.filter(username="wojtek").exists()
 
+
 # LoginView
 
 @pytest.mark.django_db
@@ -170,6 +175,7 @@ def test_login(client):
     assert response.status_code == http.HTTPStatus.FOUND
     assert User.objects.count() == 1
 
+
 @pytest.mark.django_db
 def test_failed_login(client):
     user = User.objects.create_user(username="kasia", password="kasia6000")
@@ -183,6 +189,7 @@ def test_failed_login(client):
 
     assert response.status_code == http.HTTPStatus.OK
     assert Tour.objects.count() == 0
+
 
 # LogoutView
 @pytest.mark.django_db
@@ -198,17 +205,95 @@ def test_ok(client):
     assert not client.session.get("_auth_user_id")
 
 
-
 # AddReview
+@pytest.mark.django_db
+def test_addreview(client):
+    response = client.post(
+        reverse("addreview"),
+        data={
+            "user_name": "Wojtek",
+            "user_review": "Ekstra",
+        },
+    )
+
+    assert response.status_code == http.HTTPStatus.FOUND
+    assert Review.objects.count() == 1
+    assert Review.objects.last().user_name == "Wojtek"
+    assert Review.objects.last().user_review == "Ekstra"
 
 
 # ReviewList
+@pytest.mark.django_db
+def test_reviewlist(client):
+    for i in range(5):
+        Review.objects.create(
+            user_name=f"Wojtek{i}",
+            user_review="Ekstra",
+        )
+
+    response = client.get(
+        reverse("review"),
+    )
+
+    assert response.status_code == http.HTTPStatus.OK
+    for i in range(5):
+        assert f"Wojtek{i}" in response.content.decode()
 
 
 # TourDetails
+# @pytest.mark.django_db
+# def test_tourdetails(client):
+#     region = Region.objects.create(region_name="Tbilisi", region_description="capitol")
+#     category = Category.objects.create(type="trek", slug="hike")
+#     day = Day.objects.create(day=1, order=1)
+#     tour = Tour.objects.create(
+#         tour_name="kavkaz",
+#         tour_days=1,
+#         tour_start="2021-01-01",
+#         tour_end="2021-01-02",
+#         tour_price=999,
+#         category=category,
+#     )
+#     attraction = TouristAttractions.objects.create(attraction_name="Tbilisi",
+#                                                    attraction_description="capiol",
+#                                                    attraction_type=1,
+#                                                    attraction_region=region
+#                                                    )
+#     for i in range(5):
+#         AttractionPlan.objects.create(
+#             day_id=day,
+#             tour_id=tour,
+#             attraction_id=attraction
+#         )
+#
+#     response = client.get(
+#         reverse("tourdetails"),
+#     )
+#
+#     assert response.status_code == http.HTTPStatus.OK
 
 
 # ContactView
+@patch("Tours_app.views.send_mail")
+@pytest.mark.django_db
+def test_mail(test_send_mail, client):
+    test_send_mail.return_value = None
+    response = client.post(
+        reverse("contact"),
+        data={
+            "odbiorca": "w@wp.pl",
+            "imie": "Wojtek",
+            "tekst": "siema",
+        },
+    )
+
+    assert response.status_code == http.HTTPStatus.OK
+    test_send_mail.assert_called_with(
+        "Kontakt z adventuretours",
+        "Wojtek",
+        settings.DEFAULT_FROM_EMAIL,
+        ["w@wp.pl"],
+    )
 
 
 # Add Reservation
