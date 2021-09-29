@@ -8,7 +8,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.test import Client
 from django.urls import reverse, resolve
-from Tours_app.models import Category, Tour, Review, AttractionPlan, Day, TouristAttractions, Region
+from Tours_app.models import Category, Tour, Review, AttractionPlan, Day, TouristAttractions, Region, UserReservation
 
 
 # HomePageView
@@ -130,6 +130,8 @@ def test_deleteview(client):
 
 # SignUp
 User = get_user_model()
+
+
 @pytest.mark.django_db
 def test_signup(client):
     response = client.post(
@@ -241,37 +243,6 @@ def test_reviewlist(client):
 
 
 # TourDetails
-# @pytest.mark.django_db
-# def test_tourdetails(client):
-#     region = Region.objects.create(region_name="Tbilisi", region_description="capitol")
-#     category = Category.objects.create(type="trek", slug="hike")
-#     day = Day.objects.create(day=1, order=1)
-#     tour = Tour.objects.create(
-#         tour_name="kavkaz",
-#         tour_days=1,
-#         tour_start="2021-01-01",
-#         tour_end="2021-01-02",
-#         tour_price=999,
-#         category=category,
-#     )
-#     attraction = TouristAttractions.objects.create(attraction_name="Tbilisi",
-#                                                    attraction_description="capiol",
-#                                                    attraction_type=1,
-#                                                    attraction_region=region
-#                                                    )
-#     for i in range(5):
-#         AttractionPlan.objects.create(
-#             day_id=day,
-#             tour_id=tour,
-#             attraction_id=attraction
-#         )
-#
-#     response = client.get(
-#         reverse("tourdetails"),
-#     )
-#
-#     assert response.status_code == http.HTTPStatus.OK
-
 
 # ContactView
 @patch("Tours_app.views.send_mail")
@@ -297,6 +268,58 @@ def test_mail(test_send_mail, client):
 
 
 # Add Reservation
+@pytest.mark.django_db
+def test_addreservation(client):
+    category = Category.objects.create(type="Offroad", slug="wine")
+    tour = Tour.objects.create(
+        tour_name="Offroad",
+        tour_days=7,
+        tour_start="2021-01-01",
+        tour_end="2021-01-08",
+        tour_price=4999,
+        category=category,
+    )
+    response = client.post(
+        reverse("reservation"),
+        data={
+            "name": "Wojtek",
+            "surname": "Ziolkowski",
+            "e_mail": "wp@wp.pl",
+            "wycieczka": tour.id
+        },
+    )
+
+    assert response.status_code == http.HTTPStatus.FOUND
+    assert UserReservation.objects.count() == 1
+    assert UserReservation.objects.last().name == "Wojtek"
+    assert UserReservation.objects.last().surname == "Ziolkowski"
 
 
 # ReservationListView
+@pytest.mark.django_db
+def test_reservationlist(client):
+    category = Category.objects.create(type="Offroad", slug="wine")
+    tour = Tour.objects.create(
+        tour_name="Offroad",
+        tour_days=7,
+        tour_start="2021-01-01",
+        tour_end="2021-01-08",
+        tour_price=4999,
+        category=category,
+    )
+    for i in range(5):
+        UserReservation.objects.create(
+            name="Wojtek",
+            surname="Ziolkowski",
+            e_mail="wp@wp.pl",
+            wycieczka=tour
+        )
+
+        response = client.get(
+            reverse("reservationlist"),
+        )
+
+        assert response.status_code == http.HTTPStatus.OK
+        for i in range(5):
+            assert "Wojtek" in response.content.decode()
+            assert "Ziolkowski" in response.content.decode()
