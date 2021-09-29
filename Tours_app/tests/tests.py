@@ -1,6 +1,7 @@
 import datetime
 
 import pytest, http
+from django.contrib.auth import get_user_model
 
 from django.contrib.auth.models import User
 from django.test import Client
@@ -70,19 +71,132 @@ def test_tourlist(client):
     for i in range(5):
         assert f"kavkaz{i}" in response.content.decode()
 
-# UpdateTourView
 
+# UpdateTourView
+@pytest.mark.django_db
+def test_updateview(client):
+    category = Category.objects.create(type="culture", slug="trip")
+    tour = Tour.objects.create(
+        tour_name="gruzja",
+        tour_days=4,
+        tour_start="2021-01-01",
+        tour_end="2021-01-05",
+        tour_price=3500,
+        category=category,
+    )
+
+    response = client.post(
+        reverse("tourupdate", args=[tour.id]),
+        data={
+            "tour_name": "georgia",
+            "tour_days": 9,
+            "tour_start": "2021-01-01",
+            "tour_end": "2021-01-10",
+            "tour_price": 5000,
+            "category": category.id,
+        },
+    )
+
+    assert response.status_code == http.HTTPStatus.FOUND
+    assert Tour.objects.get(id=tour.id).tour_name == "georgia"
+    assert Tour.objects.get(id=tour.id).tour_days == 9
+    assert Tour.objects.get(id=tour.id).tour_start == datetime.date(2021, 1, 1)
+    assert Tour.objects.get(id=tour.id).tour_end == datetime.date(2021, 1, 10)
+    assert Tour.objects.get(id=tour.id).tour_price == 5000
 
 # DeleteTourView
+@pytest.mark.django_db
+def test_deleteview(client):
+    category = Category.objects.create(type="narty", slug="narty")
+    tour = Tour.objects.create(
+        tour_name="Narty",
+        tour_days=7,
+        tour_start="2021-01-01",
+        tour_end="2021-01-08",
+        tour_price=4999,
+        category=category,
+    )
 
+    response = client.post(
+        reverse("tourdelete", args=[tour.id]),
+    )
+
+    assert response.status_code == http.HTTPStatus.FOUND
+    assert not Tour.objects.filter(id=tour.id).exists()
+
+# SignUp
+User = get_user_model()
+@pytest.mark.django_db
+def test_signup(client):
+    response = client.post(
+        reverse("signup"),
+        data={
+            "username": "wojtek",
+            "password": "wojtek3000",
+            "re_password": "wojtek3000",
+        },
+    )
+
+    assert response.status_code == http.HTTPStatus.FOUND
+    assert User.objects.filter(username="wojtek").exists()
+
+
+@pytest.mark.django_db
+def test_failed_signup(client):
+    response = client.post(
+        reverse("signup"),
+        data={
+            "username": "wojtek",
+            "password": "wojtek2000",
+            "re_password": "wojtek4000",
+        },
+    )
+
+    assert response.status_code == http.HTTPStatus.OK
+    assert not User.objects.filter(username="wojtek").exists()
 
 # LoginView
 
+@pytest.mark.django_db
+def test_login(client):
+    user = User.objects.create_user(username="wojt", password="wojtek5000")
+    response = client.post(
+        reverse("login"),
+        data={
+            "username": "wojt",
+            "password": "wojtek5000",
+        },
+    )
+    assert response.status_code == http.HTTPStatus.FOUND
+    assert User.objects.count() == 1
+
+@pytest.mark.django_db
+def test_failed_login(client):
+    user = User.objects.create_user(username="kasia", password="kasia6000")
+    response = client.post(
+        reverse("login"),
+        data={
+            "username": "kasia",
+            "password": "kasia7000",
+        },
+    )
+
+    assert response.status_code == http.HTTPStatus.OK
+    assert Tour.objects.count() == 0
 
 # LogoutView
+@pytest.mark.django_db
+def test_ok(client):
+    user = User.objects.create_user(username="wojtek", password="wojtek8000")
+    client.force_login(user)
 
+    response = client.get(
+        reverse("logout"),
+    )
 
-# SignUp
+    assert response.status_code == http.HTTPStatus.FOUND
+    assert not client.session.get("_auth_user_id")
+
 
 
 # AddReview
