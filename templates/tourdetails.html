@@ -48,11 +48,11 @@
             <tbody class="text-color-lighter">
             {% for attraction in day.1 %}
                 <tr class="d-flex">
-                    <td class="col-2"> {{ attraction.attraction_id.attraction_name }}</td>
-                    <td class="col-2"> {{ attraction.attraction_id.attraction_region }}</td>
+                    <td class="col-2"> {{ attraction.attraction.name }}</td>
+                    <td class="col-2"> {{ attraction.attraction.region }}</td>
                     <td class="col-2">
-                        {{ attraction.attraction_id.get_attraction_type_display }}</td>
-                    <td class="col-2">{{ attraction.attraction_id.attraction_description }}</td>
+                        {{ attraction.attraction.get_type_display }}</td>
+                    <td class="col-2">{{ attraction.attraction.description }}</td>
                 </tr>
             {% endfor %}
             </tbody>

@@ -89,7 +89,9 @@ def test_tourlist(client):
     assert response.status_code == http.HTTPStatus.OK
     for i in range(5):
         assert f"kavkaz{i}" in response.content.decode()
-
+        assert Tour.objects.last().start_date == datetime.date(2021, 1, 1)
+        assert Tour.objects.last().end_date== datetime.date(2021, 1, 2)
+        assert Tour.objects.last().price == 999
 
 # UpdateTourView
 @pytest.mark.django_db
@@ -276,6 +278,8 @@ def test_detailsview(client):
 
     assert Tour.objects.filter(id=tour.id).exists()
     assert Tour.objects.last().name == "Narty"
+    assert Tour.objects.last().start_date == datetime.date(2021,1,1)
+    assert Tour.objects.last().end_date == datetime.date(2021,1,8)
 
 
 # ContactView
