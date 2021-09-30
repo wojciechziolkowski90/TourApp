@@ -52,19 +52,21 @@ def test_addtour(client):
 # CategoryView
 @pytest.mark.django_db
 def test_category(client):
-    category = Category.objects.create(type="Foto", slug="foto")
+    category = Category.objects.create(type="trek", slug="hike")
     tour = Tour.objects.create(
-        tour_name="Kachetia",
-        tour_days=5,
+        tour_name="kavkaz",
+        tour_days=1,
         tour_start="2021-01-01",
-        tour_end="2021-01-06",
-        tour_price=9999,
+        tour_end="2021-01-02",
+        tour_price=999,
         category=category,
     )
-    response = client.get(
-        reverse("category"), args=[tour.id])
 
+    response = client.get(
+        reverse("category", args=[category.id])
+    )
     assert response.status_code == http.HTTPStatus.OK
+    assert Tour.objects.get(id=tour.id).category.type == "trek"
 
 
 # TourListView
@@ -146,8 +148,6 @@ def test_deleteview(client):
 
 # SignUp
 User = get_user_model()
-
-
 @pytest.mark.django_db
 def test_signup(client):
     response = client.post(
