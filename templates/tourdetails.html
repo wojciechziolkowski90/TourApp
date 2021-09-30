@@ -5,7 +5,7 @@
     <div class="container">
         <div class="masthead-subheading">Zarezerwuj dzisiaj!</div>
         <div class="masthead-heading text-uppercase"><br>
-            {{ tour.tour_name }}</div>
+            {{ tour.name }}</div>
         <a class="btn btn-primary btn-xl text-uppercase" href="{% url 'reservation' %}"> PRZEJDŹ DO REZERWACJI</a>
     </div>
 </header>
@@ -14,9 +14,9 @@
 
     <div class="row border-bottom border-3 p-1 m-1">
         <div class="col noPadding">
-            <h3 class="color-header text-uppercase"> Plan Wycieczki {{ tour.tour_name }}</h3>
-            <h4> {{ tour.tour_start|date:'d/m/Y' }} -
-                {{ tour.tour_end|date:'d/m/Y' }}</h4>
+            <h3 class="color-header text-uppercase"> Plan Wycieczki {{ tour.name }}</h3>
+            <h4> {{ tour.start_date|date:'d/m/Y' }} -
+                {{ tour.end_date|date:'d/m/Y' }}</h4>
             <img class="img-fluid" id="fotodetails" src="{% static 'images/mapa.png' %}" alt="home">
         </div>
     </div>

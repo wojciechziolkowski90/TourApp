@@ -4,7 +4,7 @@
 <header class="masthead">
     <div class="container">
 
-            <div class="masthead-heading text-uppercase"> Kategoria: {{ category.type }}</div>
+            <div class="masthead-heading text-uppercase"> Kategoria: {{ category.name }}</div>
 
 
         <a class="btn btn-primary btn-xl text-uppercase" href="{% url 'tourlist' %}">Powrót do listy wycieczek</a>
@@ -19,7 +19,7 @@
                 <a href="/wycieczka/{{ item.id }}"> <img class="img-fluid" src="{% static 'images/mapa.png' %}"
                                                          alt="gruzja"></a>
                 <div class="portfolio-caption">
-                    <h2 class="text-center">{{ item.tour_name }}</h2>
+                    <h2 class="text-center">{{ item.name }}</h2>
                     <div class="text-center">
                         <a class="btn btn-primary btn-xl text-uppercase"
                            href="/wycieczka/{{ item.id }}">Plan Wycieczki</a>
@@ -33,11 +33,11 @@
                     {% endif %}
                     <div class="text-left">
                         <ul class="table">
-                            <a id="tourlist">ILOŚĆ DNI: </a> {{ item.tour_days }}<br>
-                            <a id="tourlist">ROZPOCZĘCIE: </a> {{ item.tour_start|date:'d-m-Y' }} <br>
-                            <a id="tourlist">POWRÓT: </a> {{ item.tour_end|date:'d-m-Y' }}<br>
+                            <a id="tourlist">ILOŚĆ DNI: </a> {{ item.days }}<br>
+                            <a id="tourlist">ROZPOCZĘCIE: </a> {{ item.start_date|date:'d-m-Y' }} <br>
+                            <a id="tourlist">POWRÓT: </a> {{ item.end_date|date:'d-m-Y' }}<br>
                             <a id="tourlist">RODZAJ WYCIECZKI: </a>{{ item.category }}<br>
-                            <a class="btn btn-secondary">CENA: {{ item.tour_price }} PLN </a><br>
+                            <a class="btn btn-secondary">CENA: {{ item.price }} PLN </a><br>
                         </ul>
                     </div>
                 </div>

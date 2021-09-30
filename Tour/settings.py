@@ -79,7 +79,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'HOST': '127.0.0.1',
-        'NAME': 'Tours10',
+        'NAME': 'Tour1',
         'USER': 'postgres',
         'PASSWORD': 'panwojtas',
     }
@@ -124,7 +124,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# Default primary key field type
+# Default primary key field name
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 

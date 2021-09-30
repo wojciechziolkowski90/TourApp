@@ -12,35 +12,35 @@ Attracion_Type = [
 
 
 class Region(models.Model):
-    region_name = models.CharField(max_length=100)#to pole powinno nazywać sie name
-    region_description = models.CharField(max_length=255)
+    name = models.CharField(max_length=100)#to pole powinno nazywać sie name
+    description = models.CharField(max_length=255)
 
     def __str__(self):
-        return f"{self.region_name}"
+        return f"{self.name}"
 
 
 class Category(models.Model):
-    type = models.CharField(max_length=100, db_index=True)
+    name = models.CharField(max_length=100, db_index=True)
     slug = models.SlugField(max_length=150, unique=True)
 
     def __str__(self):
-        return self.type
+        return self.name
 
     def get_absolute_url(self):
         return reverse('tourlist', kwargs={'pk': self.pk})
 
 
 class Tour(models.Model):
-    tour_name = models.CharField('Nazwa wycieczki', max_length=255)
-    tour_days = models.IntegerField('Ilość dni')
-    tour_start = models.DateField('Wyjazd')
-    tour_end = models.DateField('Powrót')
-    tour_price = models.IntegerField('Cena')
-    tour_attractions = models.ManyToManyField('TouristAttractions', through='AttractionPlan')
+    name = models.CharField('Nazwa wycieczki', max_length=255)
+    days = models.IntegerField('Ilość dni')
+    start_date = models.DateField('Wyjazd')
+    end_date = models.DateField('Powrót')
+    price = models.IntegerField('Cena')
+    attractions = models.ManyToManyField('Attractions', through='AttractionPlan')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='types')
 
     def __str__(self):
-        return f"{self.tour_name}"
+        return f"{self.name}"
 
     def get_absolute_url(self):
         return reverse('tourdetails', kwargs={'pk': self.pk})
@@ -49,20 +49,20 @@ class Tour(models.Model):
         days = Day.objects.order_by('order')
         x = []
         for day in days:
-            plans = AttractionPlan.objects.filter(day_id=day, tour_id=self).order_by('day_id')
+            plans = AttractionPlan.objects.filter(day_id=day, tour_id=self).order_by('day')
             if plans.count() > 0:
                 x.append([day.get_day_display(), plans])
         return x
 
 
-class TouristAttractions(models.Model):
-    attraction_name = models.CharField(max_length=100)
-    attraction_description = models.CharField(max_length=255)
-    attraction_type = models.IntegerField(choices=Attracion_Type)
-    attraction_region = models.ForeignKey(Region, on_delete=models.CASCADE)
+class Attractions(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.CharField(max_length=255)
+    type = models.IntegerField(choices=Attracion_Type)
+    region = models.ForeignKey('Region', on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.attraction_name} {self.attraction_description} {self.attraction_region}{self.get_attraction_type_display()}"
+        return f"{self.name} {self.description} {self.region}{self.get_type_display()}"
 
 
 class Day(models.Model):
@@ -86,20 +86,20 @@ class Day(models.Model):
 
 
 class AttractionPlan(models.Model):
-    day_id = models.ForeignKey(Day, on_delete=models.CASCADE)
-    tour_id = models.ForeignKey('Tour', on_delete=models.CASCADE)
-    attraction_id = models.ForeignKey(TouristAttractions, on_delete=models.CASCADE, null=True)
+    day = models.ForeignKey(Day, on_delete=models.CASCADE)
+    tour = models.ForeignKey(Tour, on_delete=models.CASCADE)
+    attraction = models.ForeignKey(Attractions, on_delete=models.CASCADE, null=True)
 
 
 class Review(models.Model):
-    user_name = models.CharField('Imię', max_length=100)
-    user_review = models.TextField('Opinia')
+    name = models.CharField('Imię', max_length=100)
+    review = models.TextField('Opinia')
 
     def __str__(self):
-        return f"{self.user_name} {self.user_review}"
+        return f"{self.name} {self.review}"
 
 
-class UserReservation(models.Model):
+class Reservation(models.Model):
     name = models.CharField('Imię', max_length=100)
     surname = models.CharField('Nazwisko', max_length=100)
     e_mail = models.EmailField()

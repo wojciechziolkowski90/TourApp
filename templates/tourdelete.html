@@ -5,12 +5,12 @@
     <div class="container">
 
         <div class="masthead-heading text-uppercase">USUŃ WYCIECZKĘ <br>
-            {{ tour.tour_name }}</div>
+            {{ tour.name }}</div>
     </div>
 </header>
 
 <div class="text-center">
-<h2>Czy na pewno chcesz usunąć wycieczkę {{ object.tour_name }} ?</h2>
+<h2>Czy na pewno chcesz usunąć wycieczkę {{ object.name }} ?</h2>
     <form method="post" class="bg-light">
         {% csrf_token %}
         {{ form.as_p }}
