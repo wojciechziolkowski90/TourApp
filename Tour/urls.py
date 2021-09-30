@@ -6,7 +6,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 from Tours_app import views
-from Tours_app.models import UserReservation
+from Tours_app.models import Reservation
 from Tours_app.views import HomePageView, AboutPageView, LoginView, LogoutView, \
     TourListView, SignUp, DeleteTourView, UpdateTourView, AddTourView, ReviewView, AddReviewView, \
     ContactView, TourDetails, CategoryListView, ReservationView, ReservationList

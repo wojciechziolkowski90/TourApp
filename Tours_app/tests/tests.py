@@ -8,7 +8,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.test import Client
 from django.urls import reverse, resolve
-from Tours_app.models import Category, Tour, Review, AttractionPlan, Day, TouristAttractions, Region, UserReservation
+from Tours_app.models import Category, Tour, Review, AttractionPlan, Day, Attractions, Region, Reservation
 
 
 # HomePageView
@@ -26,39 +26,39 @@ def test_AboutPageView(client):
 # Add tour view
 @pytest.mark.django_db
 def test_addtour(client):
-    category = Category.objects.create(type="wine", slug="wine")
+    category = Category.objects.create(name="wine", slug="wine")
 
     response = client.post(
         reverse("addtour"),
         data={
-            "tour_name": "offroad",
-            "tour_days": 3,
-            "tour_start": "2021-01-01",
-            "tour_end": "2021-01-04",
-            "tour_price": 99,
+            "name": "offroad",
+            "days": 3,
+            "start_date": "2021-01-01",
+            "end_date": "2021-01-04",
+            "price": 99,
             "category": category.id,
         },
     )
 
     assert response.status_code == http.HTTPStatus.FOUND
     assert Tour.objects.count() == 1
-    assert Tour.objects.last().tour_name == "offroad"
-    assert Tour.objects.last().tour_days == 3
-    assert Tour.objects.last().tour_start == datetime.date(2021, 1, 1)
-    assert Tour.objects.last().tour_end == datetime.date(2021, 1, 4)
-    assert Tour.objects.last().tour_price == 99
+    assert Tour.objects.last().name == "offroad"
+    assert Tour.objects.last().days == 3
+    assert Tour.objects.last().start_date == datetime.date(2021, 1, 1)
+    assert Tour.objects.last().end_date == datetime.date(2021, 1, 4)
+    assert Tour.objects.last().price == 99
 
 
 # CategoryView
 @pytest.mark.django_db
 def test_category(client):
-    category = Category.objects.create(type="trek", slug="hike")
+    category = Category.objects.create(name="trek", slug="hike")
     tour = Tour.objects.create(
-        tour_name="kavkaz",
-        tour_days=1,
-        tour_start="2021-01-01",
-        tour_end="2021-01-02",
-        tour_price=999,
+        name="kavkaz",
+        days=1,
+        start_date="2021-01-01",
+        end_date="2021-01-02",
+        price=999,
         category=category,
     )
 
@@ -66,23 +66,22 @@ def test_category(client):
         reverse("category", args=[category.id])
     )
     assert response.status_code == http.HTTPStatus.OK
-    assert Tour.objects.get(id=tour.id).category.type == "trek"
+    assert Tour.objects.get(id=tour.id).category.name == "trek"
 
 
 # TourListView
 @pytest.mark.django_db
 def test_tourlist(client):
-    category = Category.objects.create(type="trek", slug="hike")
+    category = Category.objects.create(name="trek", slug="hike")
     for i in range(5):
         Tour.objects.create(
-            tour_name=f"kavkaz{i}",
-            tour_days=1,
-            tour_start="2021-01-01",
-            tour_end="2021-01-02",
-            tour_price=999,
+            name=f"kavkaz{i}",
+            days=1,
+            start_date="2021-01-01",
+            end_date="2021-01-02",
+            price=999,
             category=category,
         )
-
     response = client.get(
         reverse("tourlist"),
     )
@@ -95,46 +94,46 @@ def test_tourlist(client):
 # UpdateTourView
 @pytest.mark.django_db
 def test_updateview(client):
-    category = Category.objects.create(type="culture", slug="trip")
+    category = Category.objects.create(name="culture", slug="trip")
     tour = Tour.objects.create(
-        tour_name="gruzja",
-        tour_days=4,
-        tour_start="2021-01-01",
-        tour_end="2021-01-05",
-        tour_price=3500,
+        name="gruzja",
+        days=4,
+        start_date="2021-01-01",
+        end_date="2021-01-05",
+        price=3500,
         category=category,
     )
 
     response = client.post(
         reverse("tourupdate", args=[tour.id]),
         data={
-            "tour_name": "georgia",
-            "tour_days": 9,
-            "tour_start": "2021-01-01",
-            "tour_end": "2021-01-10",
-            "tour_price": 5000,
+            "name": "georgia",
+            "days": 9,
+            "start_date": "2021-01-01",
+            "end_date": "2021-01-10",
+            "price": 5000,
             "category": category.id,
         },
     )
 
     assert response.status_code == http.HTTPStatus.FOUND
-    assert Tour.objects.get(id=tour.id).tour_name == "georgia"
-    assert Tour.objects.get(id=tour.id).tour_days == 9
-    assert Tour.objects.get(id=tour.id).tour_start == datetime.date(2021, 1, 1)
-    assert Tour.objects.get(id=tour.id).tour_end == datetime.date(2021, 1, 10)
-    assert Tour.objects.get(id=tour.id).tour_price == 5000
+    assert Tour.objects.get(id=tour.id).name == "georgia"
+    assert Tour.objects.get(id=tour.id).days == 9
+    assert Tour.objects.get(id=tour.id).start_date == datetime.date(2021, 1, 1)
+    assert Tour.objects.get(id=tour.id).end_date == datetime.date(2021, 1, 10)
+    assert Tour.objects.get(id=tour.id).price == 5000
 
 
 # DeleteTourView
 @pytest.mark.django_db
 def test_deleteview(client):
-    category = Category.objects.create(type="narty", slug="narty")
+    category = Category.objects.create(name="narty", slug="narty")
     tour = Tour.objects.create(
-        tour_name="Narty",
-        tour_days=7,
-        tour_start="2021-01-01",
-        tour_end="2021-01-08",
-        tour_price=4999,
+        name="Narty",
+        days=7,
+        start_date="2021-01-01",
+        end_date="2021-01-08",
+        price=4999,
         category=category,
     )
 
@@ -229,15 +228,15 @@ def test_addreview(client):
     response = client.post(
         reverse("addreview"),
         data={
-            "user_name": "Wojtek",
-            "user_review": "Ekstra",
+            "name": "Wojtek",
+            "review": "Ekstra",
         },
     )
 
     assert response.status_code == http.HTTPStatus.FOUND
     assert Review.objects.count() == 1
-    assert Review.objects.last().user_name == "Wojtek"
-    assert Review.objects.last().user_review == "Ekstra"
+    assert Review.objects.last().name == "Wojtek"
+    assert Review.objects.last().review == "Ekstra"
 
 
 # ReviewList
@@ -245,8 +244,8 @@ def test_addreview(client):
 def test_reviewlist(client):
     for i in range(5):
         Review.objects.create(
-            user_name=f"Wojtek{i}",
-            user_review="Ekstra",
+            name=f"Wojtek{i}",
+            review="Ekstra",
         )
 
     response = client.get(
@@ -261,13 +260,13 @@ def test_reviewlist(client):
 # TourDetails
 @pytest.mark.django_db
 def test_detailsview(client):
-    category = Category.objects.create(type="narty", slug="narty")
+    category = Category.objects.create(name="narty", slug="narty")
     tour = Tour.objects.create(
-        tour_name="Narty",
-        tour_days=7,
-        tour_start="2021-01-01",
-        tour_end="2021-01-08",
-        tour_price=4999,
+        name="Narty",
+        days=7,
+        start_date="2021-01-01",
+        end_date="2021-01-08",
+        price=4999,
         category=category,
     )
 
@@ -276,7 +275,7 @@ def test_detailsview(client):
     )
 
     assert Tour.objects.filter(id=tour.id).exists()
-    assert Tour.objects.last().tour_name == "Narty"
+    assert Tour.objects.last().name == "Narty"
 
 
 # ContactView
@@ -305,13 +304,13 @@ def test_mail(test_send_mail, client):
 # Add Reservation
 @pytest.mark.django_db
 def test_addreservation(client):
-    category = Category.objects.create(type="Offroad", slug="wine")
+    category = Category.objects.create(name="Offroad", slug="wine")
     tour = Tour.objects.create(
-        tour_name="Offroad",
-        tour_days=7,
-        tour_start="2021-01-01",
-        tour_end="2021-01-08",
-        tour_price=4999,
+        name="Offroad",
+        days=7,
+        start_date="2021-01-01",
+        end_date="2021-01-08",
+        price=4999,
         category=category,
     )
     response = client.post(
@@ -325,25 +324,25 @@ def test_addreservation(client):
     )
 
     assert response.status_code == http.HTTPStatus.FOUND
-    assert UserReservation.objects.count() == 1
-    assert UserReservation.objects.last().name == "Wojtek"
-    assert UserReservation.objects.last().surname == "Ziolkowski"
+    assert Reservation.objects.count() == 1
+    assert Reservation.objects.last().name == "Wojtek"
+    assert Reservation.objects.last().surname == "Ziolkowski"
 
 
 # ReservationListView
 @pytest.mark.django_db
 def test_reservationlist(client):
-    category = Category.objects.create(type="Offroad", slug="wine")
+    category = Category.objects.create(name="Offroad", slug="wine")
     tour = Tour.objects.create(
-        tour_name="Offroad",
-        tour_days=7,
-        tour_start="2021-01-01",
-        tour_end="2021-01-08",
-        tour_price=4999,
+        name="Offroad",
+        days=7,
+        start_date="2021-01-01",
+        end_date="2021-01-08",
+        price=4999,
         category=category,
     )
     for i in range(5):
-        UserReservation.objects.create(
+        Reservation.objects.create(
             name="Wojtek",
             surname="Ziolkowski",
             e_mail="wp@wp.pl",

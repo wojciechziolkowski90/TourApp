@@ -451,10 +451,10 @@ legend + * {
 }
 
 /* rtl:raw:
-[type="tel"],
-[type="url"],
-[type="email"],
-[type="number"] {
+[name="tel"],
+[name="url"],
+[name="email"],
+[name="number"] {
   direction: ltr;
 }
 */
@@ -12525,7 +12525,7 @@ section#contact form#contactForm :-ms-input-placeholder {
 }
 
 #id_name {
-    display: block;
+   display: block;
     width: 300px !important;
     padding: 0.375rem 0.75rem;
     font-size: 1rem;
@@ -12540,6 +12540,7 @@ section#contact form#contactForm :-ms-input-placeholder {
     appearance: none;
     border-radius: 0.25rem;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
 
 }
 
@@ -12662,11 +12663,10 @@ section#contact form#contactForm :-ms-input-placeholder {
 
 }
 
-#id_user_name {
-    display: block;
+#id_name {
+   display: block;
     width: 300px !important;
     padding: 0.375rem 0.75rem;
-    margin: 20px;
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
@@ -12679,14 +12679,14 @@ section#contact form#contactForm :-ms-input-placeholder {
     appearance: none;
     border-radius: 0.25rem;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
 }
 
 
-#id_user_review {
-    display: block;
+#id_review {
+   display: block;
     width: 300px !important;
     padding: 0.375rem 0.75rem;
-    margin: 20px;
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
@@ -12699,6 +12699,7 @@ section#contact form#contactForm :-ms-input-placeholder {
     appearance: none;
     border-radius: 0.25rem;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
 }
 
 

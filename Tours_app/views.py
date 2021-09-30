@@ -10,7 +10,7 @@ from django.views import View
 from django.views.generic import ListView, DetailView, DeleteView, UpdateView, CreateView
 
 from Tours_app.forms import LoginForm, SignUpForm, EmailForm
-from Tours_app.models import Tour, Review, Category, UserReservation
+from Tours_app.models import Tour, Review, Category, Reservation
 
 
 class HomePageView(View):
@@ -38,7 +38,7 @@ class CategoryListView(View):
 
 class AddTourView(CreateView):
     model = Tour
-    fields = ['tour_name', 'tour_days', 'tour_start', 'tour_end', 'category', 'tour_price']
+    fields = ['name', 'days', 'start_date', 'end_date', 'category', 'price']
     template_name = 'touraddform.html'
 
     def get_success_url(self):
@@ -49,7 +49,7 @@ class AddTourView(CreateView):
 
 class UpdateTourView(UpdateView):
     model = Tour
-    fields = ['tour_name', 'tour_days', 'tour_start', 'tour_end', 'category', 'tour_price']
+    fields = ['name', 'days', 'start_date', 'end_date', 'category', 'price']
     template_name = 'tourupdate.html'
 
     def get_success_url(self):
@@ -150,7 +150,7 @@ class ContactView(View):
 
 
 class ReservationView(CreateView):
-    model = UserReservation
+    model = Reservation
     fields = '__all__'
     template_name = 'reservationform.html'
 
@@ -161,7 +161,7 @@ class ReservationView(CreateView):
 class ReservationList(View):
     def get(self, request):
         tour = Tour.objects.all()
-        reservation = UserReservation.objects.all()
+        reservation = Reservation.objects.all()
         return render(request, 'reservationlist.html', {'reservation': reservation, 'tour': tour})
 
 

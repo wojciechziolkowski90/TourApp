@@ -1,6 +1,6 @@
 import pytest
 
-from Tours_app.models import Tour, Review, Category, UserReservation
+from Tours_app.models import Tour, Review, Category, Reservation
 
 
 @pytest.fixture
@@ -37,7 +37,7 @@ def reviews():
 def reservation(tours):
     res = []
     for r in range(5):
-        x = UserReservation.objects.create(name='wojtek', surname='ziolkow', e_mail='w@wp.pl', wycieczka=tours)
+        x = Reservation.objects.create(name='wojtek', surname='ziolkow', e_mail='w@wp.pl', wycieczka=tours)
         res.append(x)
     return res
 

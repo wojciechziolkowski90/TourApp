@@ -1,25 +1,25 @@
 from django.contrib import admin
-from Tours_app.models import Tour, Region, TouristAttractions, AttractionPlan, Day, Category
+from Tours_app.models import Tour, Region, Attractions, AttractionPlan, Day, Category
 
 
 @admin.register(Region)
 class RegionAdmin(admin.ModelAdmin):
-    list_display = ['id', 'region_name', 'region_description']
+    list_display = ['id', 'name', 'description']
 
 
 @admin.register(Tour)
 class TourAdmin(admin.ModelAdmin):
-    list_display = ['id', 'tour_name', 'category']
+    list_display = ['id', 'name', 'category']
 
 
-@admin.register(TouristAttractions)
+@admin.register(Attractions)
 class TouristAttractionAdmin(admin.ModelAdmin):
-    list_display = ['id', 'attraction_name', 'attraction_type']
+    list_display = ['id', 'name', 'type']
 
 
 @admin.register(AttractionPlan)
 class AttractionPlanAdmin(admin.ModelAdmin):
-    list_display = ['day_id', 'tour_id', 'attraction_id']
+    list_display = ['day', 'tour', 'attraction']
 
 
 @admin.register(Day)
@@ -29,6 +29,6 @@ class DayNameAdmin(admin.ModelAdmin):
 
 @admin.register(Category)
 class TourTypeAdmin(admin.ModelAdmin):
-    list_display = ['type']
+    list_display = ['name']
 
 
